@@ -3,10 +3,10 @@ import random
 
 # Node to contain X/O/Blank labels to display in the UI
 class Node:
-    def __init__(self, node_number, player_shape=None):
+    def __init__(self, node_num, player_shape=None):
         self.value = None
         self.image = None
-        self.node_number = node_number
+        self.node_num = node_num
         self.shape = player_shape
         self.edges = {}
     
@@ -14,15 +14,22 @@ class Node:
         self.edges[to_node] = edge_weight
 
 class Graph:
-    def __init__(self):
-        graph_nodes = {}
+    def __init__(self, graph_size):
+        self.graph_nodes = {}
+        self.graph_size = graph_size
     
-    # Connects nodes within graph
-    def add_node(self, from_node, to_node, edge_weight):
-        from_node.add_node(to_node, edge_weight)
-        to_node.add_node(from_node, edge_weight)
-
     def build_graph(self):
-        node_queue = []
+        for row in range(1, self.graph_size + 1):
+            for col in range(1, self.graph_size + 1):
+                new_node = Node((row, col))
+                self.graph_nodes[(row, col)] = new_node
+    
+    def print_graph(self):
+        for key in self.graph_nodes.keys():
+            print(key)
+
         
 
+new_graph = Graph(3)
+new_graph.build_graph()
+new_graph.print_graph()
