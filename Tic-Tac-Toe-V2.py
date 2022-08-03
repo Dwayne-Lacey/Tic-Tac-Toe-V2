@@ -1,35 +1,43 @@
-import tkinter
+import tkinter as tk
 import random
 
-# Node to contain X/O/Blank labels to display in the UI
-class Node:
-    def __init__(self, node_num, player_shape=None):
-        self.value = None
-        self.image = None
-        self.node_num = node_num
-        self.shape = player_shape
-        self.edges = {}
-    
-    def add_edge(self, to_node, edge_weight):
-        self.edges[to_node] = edge_weight
+class LLNode():
+    def __init__(self, value):
+        self.value = value
+        self.next_node = None
 
-class Graph:
-    def __init__(self, graph_size):
-        self.graph_nodes = {}
-        self.graph_size = graph_size
+class LinkedList():
+    def __init__(self):
+        self.head_node = None
+        self.tail_node = None
     
-    def build_graph(self):
-        for row in range(1, self.graph_size + 1):
-            for col in range(1, self.graph_size + 1):
-                new_node = Node((row, col))
-                self.graph_nodes[(row, col)] = new_node
-    
-    def print_graph(self):
-        for key in self.graph_nodes.keys():
-            print(key)
-
+    # Add node onto bottom of linked list
+    def add_tail_node(self, value):
+        if self.head_node == None:
+            self.head_node = LLNode(value)
+            self.tail_node = self.head_node
         
+        else:
+            node_to_add = LLNode(value)
+            self.tail_node.next_node = node_to_add
+            self.tail_node = node_to_add
 
-new_graph = Graph(3)
-new_graph.build_graph()
-new_graph.print_graph()
+    # Method to merge two linked lists into one linked list
+    def merge_lists(self, secondary):
+        self.tail_node.next_node = secondary.head_node
+        self.tail_node = secondary.tail_node
+    
+    # Method to return and remove the head of a linked list
+    def pop_node(self):
+        if self.head_node == None:
+            return None
+        
+        elif self.head_node == self.tail_node:
+            node_to_return = self.head_node.value
+            self.head_node, self.tail_node = None, None
+            return node_to_return
+        
+        else:
+            node_to_return = self.head_node.value
+            self.head_node = self.head_node.next_node
+            return node_to_return
