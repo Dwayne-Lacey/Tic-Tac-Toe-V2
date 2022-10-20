@@ -1,6 +1,13 @@
 import tkinter as tk
 import random
 
+class Player():
+    def __init__(self, name, avatar, marker, image):
+        self.name = name
+        self.avatar = avatar
+        self.marker = marker
+        self.win = False
+        
 class LLNode():
     def __init__(self, value):
         self.value = value
@@ -47,7 +54,7 @@ class GNode():
         self.value = None
         self.image = None
         self.coordinate = coordinate
-        
+
 class Grid():
     def __init__(self):
         self.grid = {}
