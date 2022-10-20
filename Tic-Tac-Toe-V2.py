@@ -59,7 +59,12 @@ class Grid():
     def __init__(self):
         self.grid = {}
     
-
+    # This method builds out the grid for the game to be played on
+    def build_grid(self):
+        for y in range(1, 4):
+            for x in range(1, 4):
+                self.grid[(y,x)] = GNode((y,x))
+                
 class Application():
     def __init__(self):
         root = tk.tk()
