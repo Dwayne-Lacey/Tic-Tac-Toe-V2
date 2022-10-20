@@ -42,8 +42,14 @@ class LinkedList():
             self.head_node = self.head_node.next_node
             return node_to_return
 
+class GNode():
+    def __init__(self, coordinate):
+        self.value = None
+        self.image = None
+        self.coordinate = coordinate
+        
 class Grid():
     def __init__(self):
         self.grid = {}
     
-    
+
