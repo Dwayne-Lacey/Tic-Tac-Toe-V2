@@ -41,3 +41,9 @@ class LinkedList():
             node_to_return = self.head_node.value
             self.head_node = self.head_node.next_node
             return node_to_return
+
+class Grid():
+    def __init__(self):
+        self.grid = {}
+    
+    
