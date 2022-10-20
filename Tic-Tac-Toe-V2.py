@@ -64,7 +64,15 @@ class Grid():
         for y in range(1, 4):
             for x in range(1, 4):
                 self.grid[(y,x)] = GNode((y,x))
-                
+    
+    # This method places a marker down on the player's chosen space
+    def place_marker(self, player, coordinate):
+        if self.grid[coordinate].value == None:
+            self.grid[coordinate].value = player.marker
+            return True
+        else:
+            return False
+
 class Application():
     def __init__(self):
         root = tk.tk()
