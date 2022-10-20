@@ -7,7 +7,7 @@ class Player():
         self.avatar = avatar
         self.marker = marker
         self.win = False
-        
+
 class LLNode():
     def __init__(self, value):
         self.value = value
@@ -60,3 +60,6 @@ class Grid():
         self.grid = {}
     
 
+class Application():
+    def __init__(self):
+        root = tk.tk()
