@@ -101,6 +101,14 @@ class Grid():
             r , r2 = r2, r2 + (r2 - r)
             c, c2 = c2, c2 + (c2 - c)
         return self.dfs(r, c, r2, c2, player1, player2, grid, nodes_found)
+    
+    # Simple method to count how many nodes have had a player marker placed on them
+    def count_placed_nodes(self, grid):
+        count = 0
+        for node in grid.values:
+            if node.value != None:
+                count += 1
+        return count
 
 class Application():
     def __init__(self):
