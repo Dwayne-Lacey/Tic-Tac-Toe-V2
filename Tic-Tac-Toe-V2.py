@@ -81,6 +81,14 @@ class Grid():
         else:
             return False
     
+    # This method is to run a check to see if an inserted path has a win
+    def check_win(self, nodes_found, player1, player2):
+        if nodes_found.count(player1.marker) == 3:
+            return player1
+        elif nodes_found.count(player2.marker) == 3:
+            return player2
+        else: 
+            return None
 
 class Application():
     def __init__(self):
