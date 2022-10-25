@@ -89,6 +89,18 @@ class Grid():
             return player2
         else: 
             return None
+    
+    # This method performs a depth first search to gather nodes and place them in a list to check for a winning path
+    def dfs(self, r, c, r2, c2, player1, player2, grid, nodes_found):
+        if (r2, c2) not in grid.keys and len(nodes_found) < 3:
+            return None
+        elif len(nodes_found) == 3:
+            return self.check_win(nodes_found, player1, player2)
+        else:
+            nodes_found.append(grid[(r2, c2)].value)
+            r , r2 = r2, r2 + (r2 - r)
+            c, c2 = c2, c2 + (c2 - c)
+        return self.dfs(r, c, r2, c2, player1, player2, grid, nodes_found)
 
 class Application():
     def __init__(self):
