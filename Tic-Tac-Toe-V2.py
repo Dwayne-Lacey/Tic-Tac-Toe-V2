@@ -109,6 +109,28 @@ class Grid():
             if node.value != None:
                 count += 1
         return count
+    
+    # Iterates through a select group of nodes, performing a depth first search utilizing each node as a starting point
+    def node_search(self, player1, player2, grid=None):
+        x = None
+        nodes_to_check = [x for key in grid.keys if key[0] == 1 or key[1] == 1]
+        for node in nodes_to_check:
+            r, c = node[0], node[1]
+            winning_player = None
+            exit_loop = False
+            iter = 1
+            while winning_player == None and exit_loop == False:
+                if iter == 1:
+                    winning_player = self.dfs(r, c, r, c+1, player1, player2, grid, [grid[node].value])
+                elif iter == 2:
+                    winning_player = self.dfs(r, c, r+1, c+1, player1, player2, grid, [grid[node].value])
+                elif iter == 3:
+                    winning_player = self.dfs(r, c, r+1, c, player1, player2, grid, [grid[node].value])
+                elif iter == 4:
+                    winning_player = self.dfs(r, c, r+1, c-1, player1, player2, grid, [grid[node].value])
+                else:
+                    exit_loop = True
+
 
 class Application():
     def __init__(self):
