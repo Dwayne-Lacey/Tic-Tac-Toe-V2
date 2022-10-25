@@ -72,6 +72,15 @@ class Grid():
             return True
         else:
             return False
+    
+    # This method places a marker down on the spot chosen by the player
+    def place_marker(self, player, coordinate):
+        if self.grid[coordinate].value == None:
+            self.grid[coordinate].value = player.marker
+            return True
+        else:
+            return False
+    
 
 class Application():
     def __init__(self):
