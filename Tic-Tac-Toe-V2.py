@@ -131,6 +131,44 @@ class Grid():
                 else:
                     exit_loop = True
 
+    # Min max algorithm used by CPU player to simulate possible moves that can be played and return a dictionary full of possibles paths to take, sorted by key
+    def min_max(self, grid, player, cpu, path=[], depth=0):
+        new_grid = grid
+        moves = {}
+        for idx, node in enumerate(path):
+            if idx != 1:
+                grid[node].value = cpu.marker
+            else:
+                grid[node].value = player.marker
+        if self.count_placed_nodes(grid) > 4 and depth > 0:
+            win = self.node_search(grid, player, cpu)
+            if win == player:
+                moves["player"] = LinkedList()
+                moves["player"].add_tail_node(path)
+                return moves
+            elif win == cpu:
+                moves[depth] = LinkedList()
+                moves[depth].add_tail_nodes(path)
+                return moves
+            elif win == None and depth == 3:
+                moves[4] = LinkedList()
+                moves[4].add_tail_node(path)
+        elif self.count_placed_nodes(grid) < 5 and depth == 3:
+            moves[4] = LinkedList()
+            moves[4].add_tail_node(path)
+            return moves
+        for node in grid.keys:
+            if grid[node].value == None:
+                path.append(node)
+                moves_found = self.min_max(grid, player, cpu, path, depth+1)
+                for key in moves_found.keys:
+                    if key in list(moves.keys):
+                        moves[key].merge_lists(moves_found[key])
+                    else:
+                        moves[key] = moves_found[key]
+        return moves
+
+
 
 class Application():
     def __init__(self):
