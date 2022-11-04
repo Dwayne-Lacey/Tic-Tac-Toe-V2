@@ -73,14 +73,6 @@ class Grid():
         else:
             return False
     
-    # This method places a marker down on the spot chosen by the player
-    def place_marker(self, player, coordinate):
-        if self.grid[coordinate].value == None:
-            self.grid[coordinate].value = player.marker
-            return True
-        else:
-            return False
-    
     # This method is to run a check to see if an inserted path has a win
     def check_win(self, nodes_found, player1, player2):
         if nodes_found.count(player1.marker) == 3:
@@ -167,9 +159,20 @@ class Grid():
                     else:
                         moves[key] = moves_found[key]
         return moves
+    
+    # This method takes the created moves dictionary and uses it to find the optimal next move for the CPU
+    def find_best_move(self, player, cpu):
+        moves = self.min_max(self.grid, player, cpu)
+
 
 
 
 class Application():
     def __init__(self):
         root = tk.tk()
+
+
+new_grid = Grid()
+new_grid.build_grid()
+player1 = Player(name="TestName", avatar=None, marker="X", image=None)
+player2 = Player(name="TestCPU", avatar=None, marker="O", image=None)
