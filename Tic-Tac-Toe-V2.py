@@ -85,7 +85,7 @@ class Grid():
     
     # This method performs a depth first search to gather nodes and place them in a list to check for a winning path
     def dfs(self, r, c, r2, c2, player1, player2, grid, nodes_found):
-        if (r2, c2) not in grid.keys and len(nodes_found) < 3:
+        if (r2, c2) not in grid.keys() and len(nodes_found) < 3:
             return None
         elif len(nodes_found) == 3:
             return self.check_win(nodes_found, player1, player2)
@@ -106,23 +106,30 @@ class Grid():
     # Iterates through a select group of nodes, performing a depth first search utilizing each node as a starting point
     def node_search(self, player1, player2, grid=None):
         x = None
-        nodes_to_check = [x for key in grid.keys if key[0] == 1 or key[1] == 1]
+        nodes_to_check = [key for key in grid.keys() if key[0] == 1 or key[1] == 1]
+        winning_player = None
         for node in nodes_to_check:
             r, c = node[0], node[1]
-            winning_player = None
             exit_loop = False
             iter = 1
             while winning_player == None and exit_loop == False:
                 if iter == 1:
                     winning_player = self.dfs(r, c, r, c+1, player1, player2, grid, [grid[node].value])
+                    iter += 1
                 elif iter == 2:
                     winning_player = self.dfs(r, c, r+1, c+1, player1, player2, grid, [grid[node].value])
+                    iter += 1
                 elif iter == 3:
                     winning_player = self.dfs(r, c, r+1, c, player1, player2, grid, [grid[node].value])
+                    iter += 1
                 elif iter == 4:
                     winning_player = self.dfs(r, c, r+1, c-1, player1, player2, grid, [grid[node].value])
+                    iter += 1
                 else:
                     exit_loop = True
+            if winning_player != None:
+                return winning_player
+        return winning_player
 
     # Min max algorithm used by CPU player to simulate possible moves that can be played and return a dictionary full of possibles paths to take, sorted by key
     def min_max(self, grid, player, cpu, path=[], depth=0):
@@ -140,7 +147,7 @@ class Grid():
         # Checks how many moves have been made on the simulated grid total to decide if a win check should be done. Requires a minimum of 5 moves made before a win could be possibly made
         nodes_placed = self.count_placed_nodes(new_grid)
         if nodes_placed > 4 and depth > 0:
-            win = self.node_search(new_grid, player, cpu)
+            win = self.node_search(player, cpu, new_grid)
             if win == player:
                 moves["player"] = LinkedList()
                 moves["player"].add_tail_node(path)
