@@ -171,12 +171,13 @@ class Grid():
             current_path = path.copy()
             if new_grid[node].value == None:
                 current_path.append(node)
-                moves_found = self.min_max(new_grid, player, cpu, current_path, depth+1)
-                for key in moves_found.keys():
-                    if key in list(moves.keys()):
-                        moves[key].merge_lists(moves_found[key])
-                    else:
-                        moves[key] = moves_found[key]
+                if depth < 3:
+                    moves_found = self.min_max(new_grid, player, cpu, current_path, depth+1)
+                    for key in moves_found.keys():
+                        if key in list(moves.keys()):
+                            moves[key].merge_lists(moves_found[key])
+                        else:
+                            moves[key] = moves_found[key]
         return moves
     
     # This method takes the created moves dictionary and uses it to find the optimal next move for the CPU
@@ -199,5 +200,7 @@ player2 = Player(name="TestCPU", avatar=None, marker="O", image=None)
 
 new_grid.place_marker(player1, (2,2))
 new_grid.place_marker(player2, (1,1))
+new_grid.place_marker(player1, (2,1))
+new_grid.place_marker(player2, (1,2))
 all_moves = new_grid.min_max(grid=new_grid.grid, player=player1, cpu=player2)
 print(all_moves)
