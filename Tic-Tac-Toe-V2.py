@@ -1,3 +1,4 @@
+from shutil import move
 import tkinter as tk
 import random
 from copy import deepcopy
@@ -181,10 +182,18 @@ class Grid():
         return moves
     
     # This method takes the created moves dictionary and uses it to find the optimal next move for the CPU
+    # 1 - CPU wins next move, player - Player wins in their next move, 3 - CPU wins in their second move, 4 - Nobody wins in next three simulated moves
     def find_best_move(self, player, cpu):
-        moves = self.min_max(self.grid, player, cpu)
-
-
+        available_moves = self.min_max(self.grid, player, cpu)
+        if 1 in available_moves.keys():
+            move_to_return = available_moves[1].pop_node()
+        elif "player" in available_moves.keys():
+            move_to_return = available_moves["player"].pop_node()
+            return move_to_return[1]
+        else:
+            minimum_key = min(list(available_moves.keys()))
+            move_to_return = available_moves[minimum_key].pop_node()
+        return move_to_return[0]
 
 
 class Application():
@@ -202,5 +211,7 @@ new_grid.place_marker(player1, (2,2))
 new_grid.place_marker(player2, (1,1))
 new_grid.place_marker(player1, (2,1))
 new_grid.place_marker(player2, (1,2))
+new_grid.place_marker(player1, (1,3))
 all_moves = new_grid.min_max(grid=new_grid.grid, player=player1, cpu=player2)
+move_found = new_grid.find_best_move(player1, player2)
 print(all_moves)
