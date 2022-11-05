@@ -1,4 +1,3 @@
-from shutil import move
 import tkinter as tk
 import random
 from copy import deepcopy
@@ -66,6 +65,11 @@ class Grid():
         for y in range(1, 4):
             for x in range(1, 4):
                 self.grid[(y,x)] = GNode((y,x))
+    
+    def clear_grid(self):
+        for node in self.grid.values():
+            node.value = None
+            node.image = None
     
     # This method places a marker down on the player's chosen space
     def place_marker(self, player, coordinate):
@@ -195,6 +199,18 @@ class Grid():
             move_to_return = available_moves[minimum_key].pop_node()
         return move_to_return[0]
 
+
+class AvatarWindow(tk.Frame):
+    def __init__(self, *args, **kwargs):
+        tk.Frame.__init__(self, *args, **kwargs)
+
+class GameWindow(tk.Frame):
+    def __init__(self, *args, **kwargs):
+        tk.Frame.__init__(self, *args, **kwargs)
+
+class WinnerWindow(tk.Frame):
+    def __init__(self, *args, **kwargs):
+        tk.Frame.__init__(self, *args, **kwargs)
 
 class Application():
     def __init__(self):
