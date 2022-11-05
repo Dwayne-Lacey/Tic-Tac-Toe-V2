@@ -1,6 +1,7 @@
 import tkinter as tk
 import random
 from copy import deepcopy
+from turtle import window_height
 
 class Player():
     def __init__(self, name, avatar, marker, image):
@@ -199,10 +200,33 @@ class Grid():
             move_to_return = available_moves[minimum_key].pop_node()
         return move_to_return[0]
 
-
+# Builds frame for avatar/setup window
 class AvatarWindow(tk.Frame):
-    def __init__(self, *args, **kwargs):
-        tk.Frame.__init__(self, *args, **kwargs)
+    def __init__(self, master):
+
+        # Will inherit root window when instantiated 
+        tk.Frame.__init__(self, master)
+
+        # Creates spacers needed for GUI
+        left_row_1_spacer = tk.Canvas(self, background="#8F8F8F", width=100, height=5, highlightthickness=0)
+        right_row_1_spacer = tk.Canvas(self, background="#8F8F8F", width=100, height=5, highlightthickness=0)
+        row_2_spacer = tk.Canvas(self, background="#1F1F1F", width=5, height=1, highlightthickness=0)
+        row_3_spacer = tk.Canvas(self, background="#1F1F1F", width=5, height=1, highlightthickness=0)
+
+        # Creates labels used within GUI
+        setup_label = tk.Label(self, background="#FFFFFF", width=10, height=2, highlightthickness=0, text="Setup")
+
+        # Builds out window
+        left_row_1_spacer.grid(row=1, column=1, sticky="nsew")
+        setup_label.grid(row=1, column=2, columnspan=5, sticky="nsew")
+        right_row_1_spacer.grid(row=1, column=7, sticky="nsew")
+
+        # Adds weights to frame
+        self.grid_rowconfigure(0, weight=1)
+        self.grid_columnconfigure(0, weight=1)
+
+
+
 
 class GameWindow(tk.Frame):
     def __init__(self, *args, **kwargs):
@@ -214,20 +238,28 @@ class WinnerWindow(tk.Frame):
 
 class Application():
     def __init__(self):
-        root = tk.tk()
+        self.root = tk.Tk()
+        avatar_frame = AvatarWindow(self.root)
+        avatar_frame.grid(row=1, column=1, sticky="nsew")
+
+        # Maintains application loop until retrieving input to close application
+        self.root.mainloop()
 
 
-new_grid = Grid()
-new_grid.build_grid()
-player1 = Player(name="TestName", avatar=None, marker="X", image=None)
-player2 = Player(name="TestCPU", avatar=None, marker="O", image=None)
+new_game = Application()
 
 
-new_grid.place_marker(player1, (2,2))
-new_grid.place_marker(player2, (1,1))
-new_grid.place_marker(player1, (2,1))
-new_grid.place_marker(player2, (1,2))
-new_grid.place_marker(player1, (1,3))
-all_moves = new_grid.min_max(grid=new_grid.grid, player=player1, cpu=player2)
-move_found = new_grid.find_best_move(player1, player2)
-print(all_moves)
+# new_grid = Grid()
+# new_grid.build_grid()
+# player1 = Player(name="TestName", avatar=None, marker="X", image=None)
+# player2 = Player(name="TestCPU", avatar=None, marker="O", image=None)
+
+
+# new_grid.place_marker(player1, (2,2))
+# new_grid.place_marker(player2, (1,1))
+# new_grid.place_marker(player1, (2,1))
+# new_grid.place_marker(player2, (1,2))
+# new_grid.place_marker(player1, (1,3))
+# all_moves = new_grid.min_max(grid=new_grid.grid, player=player1, cpu=player2)
+# move_found = new_grid.find_best_move(player1, player2)
+# print(all_moves)
