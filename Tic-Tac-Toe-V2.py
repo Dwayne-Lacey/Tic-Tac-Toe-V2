@@ -1,7 +1,6 @@
 import tkinter as tk
 import random
 from copy import deepcopy
-from turtle import window_height
 
 class Player():
     def __init__(self, name, avatar, marker, image):
@@ -208,18 +207,40 @@ class AvatarWindow(tk.Frame):
         tk.Frame.__init__(self, master)
 
         # Creates spacers needed for GUI
-        left_row_1_spacer = tk.Canvas(self, background="#8F8F8F", width=100, height=5, highlightthickness=0)
-        right_row_1_spacer = tk.Canvas(self, background="#8F8F8F", width=100, height=5, highlightthickness=0)
-        row_2_spacer = tk.Canvas(self, background="#1F1F1F", width=5, height=1, highlightthickness=0)
-        row_3_spacer = tk.Canvas(self, background="#1F1F1F", width=5, height=1, highlightthickness=0)
+        row_1_spacer = tk.Canvas(self, background="#8F8F8F", width=1, height=20, highlightthickness=0)
+
+        left_row_2_spacer = tk.Canvas(self, background="#8F8F8F", width=100, height=5, highlightthickness=0)
+        right_row_2_spacer = tk.Canvas(self, background="#8F8F8F", width=100, height=5, highlightthickness=0)
+
+        row_3_spacer = tk.Canvas(self, background="#8F8F8F", width=1, height=20, highlightthickness=0)
+
+        row_4_spacer1 = tk.Canvas(self, background="#8F8F8F", width=1, height=20, highlightthickness=0)
+        row_4_spacer2 = tk.Canvas(self, background="#8F8F8F", width=1, height=20, highlightthickness=0)
+        row_4_spacer3 = tk.Canvas(self, background="#8F8F8F", width=1, height=20, highlightthickness=0)
 
         # Creates labels used within GUI
         setup_label = tk.Label(self, background="#FFFFFF", width=10, height=2, highlightthickness=0, text="Setup")
 
+        # Creates entry boxes for player names
+        player1_entry = tk.Entry(self, background="#FFFFFF", width=10, highlightthickness=0)
+        player2_entry = tk.Entry(self, background="#FFFFFF", width=10, highlightthickness=0)
+
         # Builds out window
-        left_row_1_spacer.grid(row=1, column=1, sticky="nsew")
-        setup_label.grid(row=1, column=2, columnspan=5, sticky="nsew")
-        right_row_1_spacer.grid(row=1, column=7, sticky="nsew")
+        row_1_spacer.grid(row=1, column=1, sticky="nsew", columnspan=19)
+        
+        left_row_2_spacer.grid(row=2, column=1, columnspan=7, sticky="nsew")
+        setup_label.grid(row=2, column=8, columnspan=5, sticky="nsew")
+        right_row_2_spacer.grid(row=2, column=13, columnspan=7, sticky="nsew")
+
+        row_3_spacer.grid(row=3, column=1, sticky="nsew", columnspan=19)
+
+        row_4_spacer1.grid(row=4, column=1, sticky="nsew")
+        player1_entry.grid(row=4, column=2, columnspan=5, sticky="nsew")
+        row_4_spacer2.grid(row=4, column=7, columnspan=7, sticky="nsew")
+        player2_entry.grid(row=4, column=14, columnspan=5, sticky="nsew")
+        row_4_spacer3.grid(row=4, column=19, sticky="nsew")
+    
+
 
         # Adds weights to frame
         self.grid_rowconfigure(0, weight=1)
@@ -238,7 +259,12 @@ class WinnerWindow(tk.Frame):
 
 class Application():
     def __init__(self):
+        # Instantiates application
         self.root = tk.Tk()
+
+        # Adds title to window
+        self.root.title("Tic-Tac-Toe")
+
         avatar_frame = AvatarWindow(self.root)
         avatar_frame.grid(row=1, column=1, sticky="nsew")
 
