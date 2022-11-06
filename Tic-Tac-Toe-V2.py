@@ -206,6 +206,9 @@ class AvatarWindow(tk.Frame):
         # Will inherit root window when instantiated 
         tk.Frame.__init__(self, master)
 
+        # Instantiates radiobutton variable and defines default state as single player mode
+        self.v = tk.IntVar(value=1)
+
         # Creates spacers needed for GUI
         row_1_spacer = tk.Canvas(self, background="#8F8F8F", width=1, height=20, highlightthickness=0)
 
@@ -227,21 +230,42 @@ class AvatarWindow(tk.Frame):
 
         row_7_spacer = tk.Canvas(self, background="#8F8F8F", width=1, height=20, highlightthickness=0)
 
+        row_8_spacer1 = tk.Canvas(self, background="#8F8F8F", width=20, height=20, highlightthickness=0)
+        row_8_spacer2 = tk.Canvas(self, background="#8F8F8F", width=5, height=20, highlightthickness=0)
+        row_8_spacer3 = tk.Canvas(self, background="#8F8F8F", width=5, height=20, highlightthickness=0)
+        row_8_spacer4 = tk.Canvas(self, background="#8F8F8F", width=20, height=20, highlightthickness=0)
+        row_8_spacer5 = tk.Canvas(self, background="#8F8F8F", width=20, height=20, highlightthickness=0)
+        row_8_spacer6 = tk.Canvas(self, background="#8F8F8F", width=5, height=20, highlightthickness=0)
+        row_8_spacer7 = tk.Canvas(self, background="#8F8F8F", width=5, height=20, highlightthickness=0)
+        row_8_spacer8 = tk.Canvas(self, background="#8F8F8F", width=20, height=20, highlightthickness=0)
+
+        row_9_spacer = tk.Canvas(self, background="#8F8F8F", width=1, height=5, highlightthickness=0)
+
+        row_10_spacer1 = tk.Canvas(self, background="#8F8F8F", width=20, height=20, highlightthickness=0)
+        row_10_spacer2 = tk.Canvas(self, background="#8F8F8F", width=5, height=20, highlightthickness=0)
+        row_10_spacer3 = tk.Canvas(self, background="#8F8F8F", width=5, height=20, highlightthickness=0)
+        row_10_spacer4 = tk.Canvas(self, background="#8F8F8F", width=20, height=20, highlightthickness=0)
+        row_10_spacer5 = tk.Canvas(self, background="#8F8F8F", width=30, height=20, highlightthickness=0)
+        row_10_spacer6 = tk.Canvas(self, background="#8F8F8F", width=20, height=20, highlightthickness=0)
+        row_10_spacer7 = tk.Canvas(self, background="#8F8F8F", width=5, height=20, highlightthickness=0)
+        row_10_spacer8 = tk.Canvas(self, background="#8F8F8F", width=5, height=20, highlightthickness=0)
+        row_10_spacer9 = tk.Canvas(self, background="#8F8F8F", width=20, height=20, highlightthickness=0)
+
+        row_11_spacer = tk.Canvas(self, background="#8F8F8F", width=1, height=20, highlightthickness=0)
+
         # Creates labels used within GUI
         setup_label = tk.Label(self, background="#FFFFFF", width=10, height=2, highlightthickness=0, text="Setup")
         player1_avatar_label = tk.Label(self, background="#FFFFFF", width=10, height=2, highlightthickness=0, text="Avatar1")
         player2_avatar_label = tk.Label(self, background="#FFFFFF", width=10, height=2, highlightthickness=0, text="Avatar1")
         player_count_label = tk.Label(self, background="#FFFFFF", width=10, height=2, highlightthickness=0, text="Players?")
-        players_1_label = tk.Label(self, background="#FFFFFF", width=10, height=2, highlightthickness=0, text="1")
-        players_2_label = tk.Label(self, background="#FFFFFF", width=10, height=2, highlightthickness=0, text="2")
 
         # Creates entry boxes for player names
         player1_entry = tk.Entry(self, background="#FFFFFF", width=10, highlightthickness=0)
-        player2_entry = tk.Entry(self, background="#FFFFFF", width=10, highlightthickness=0)
+        player2_entry = tk.Entry(self, background="#FFFFFF", width=10, highlightthickness=0, )
 
         # Create radio buttons to toggle single or multiplayer modes
-        single_p_rbutton = tk.Radiobutton(self, text="1", variable="v", value=1)
-        single_p_rbutton = tk.Radiobutton(self, text="2", variable="v", value=2)
+        single_p_rbutton = tk.Radiobutton(self, text="1", variable=self.v, value=1)
+        multi_p_rbutton = tk.Radiobutton(self, text="2", variable=self.v, value=2)
 
         # Creates buttons for selecting an avatar as well as the start game button
         start_game_btn = tk.Button(self, background="#FFFFFF", width=10, height=2, highlightthickness=0, text="Start Game")
@@ -286,6 +310,50 @@ class AvatarWindow(tk.Frame):
         row_6_spacer4.grid(row=6, column=17, columnspan=3, sticky="nsew")
 
         row_7_spacer.grid(row=7, column=1, columnspan=19, sticky="nsew")
+
+        row_8_spacer1.grid(row=8, column=1, sticky="nsew")
+        player1_avi_btn1.grid(row=8, column=2, sticky="nsew")
+        row_8_spacer2.grid(row=8, column=3, sticky="nsew")
+        player1_avi_btn2.grid(row=8, column=4, sticky="nsew")
+        row_8_spacer3.grid(row=8, column=5, sticky="nsew")
+        player1_avi_btn3.grid(row=8, column=6, sticky="nsew")
+        row_8_spacer4.grid(row=8, column=7, sticky="nsew")
+        player_count_label.grid(row=8, column=8, columnspan=5, sticky="nsew")
+        row_8_spacer5.grid(row=8, column=13, sticky="nsew")
+        player2_avi_btn1.grid(row=8, column=14, sticky="nsew")
+        row_8_spacer6.grid(row=8, column=15, sticky="nsew")
+        player2_avi_btn2.grid(row=8, column=16, sticky="nsew")
+        row_8_spacer7.grid(row=8, column=17, sticky="nsew")
+        player2_avi_btn3.grid(row=8, column=18, sticky="nsew")
+        row_8_spacer8.grid(row=8, column=19, sticky="nsew")
+
+        row_9_spacer.grid(row=9, column=1, columnspan=19, sticky="nsew")
+        
+        # Creates row 10
+        row_10_spacer1.grid(row=10, column=1, sticky="nsew")
+        player1_avi_btn4.grid(row=10, column=2, sticky="nsew")
+        row_10_spacer2.grid(row=10, column=3, sticky="nsew")
+        player1_avi_btn5.grid(row=10, column=4, sticky="nsew")
+        row_10_spacer3.grid(row=10, column=5, sticky="nsew")
+        player1_avi_btn6.grid(row=10, column=6, sticky="nsew")
+        row_10_spacer4.grid(row=10, column=7, sticky="nsew")
+
+        # Buttons to select single or multiplayer mode as well as space between radiobuttons
+        single_p_rbutton.grid(row=10, column=8, columnspan=2, sticky="nsew")
+        row_10_spacer5.grid(row=10, column=10, sticky="nsew")
+        multi_p_rbutton.grid(row=10, column=11, columnspan=2, sticky="nsew")
+
+        
+        row_10_spacer6.grid(row=10, column=13, sticky="nsew")
+        player2_avi_btn4.grid(row=10, column=14, sticky="nsew")
+        row_10_spacer7.grid(row=10, column=15, sticky="nsew")
+        player2_avi_btn5.grid(row=10, column=16, sticky="nsew")
+        row_10_spacer8.grid(row=10, column=17, sticky="nsew")
+        player2_avi_btn6.grid(row=10, column=18, sticky="nsew")
+        row_10_spacer9.grid(row=10, column=19, sticky="nsew")
+
+        row_11_spacer.grid(row=11, column=1, columnspan=19, sticky="nsew")
+
 
         # Adds weights to frame
         self.grid_rowconfigure(0, weight=1)
