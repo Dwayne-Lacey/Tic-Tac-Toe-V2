@@ -317,6 +317,7 @@ class AvatarWindow(tk.Frame):
         self.single_p_rbutton.bind('<ButtonRelease-1>', self.change_single_player)
 
         self.multi_p_rbutton = tk.Radiobutton(self, text="2", variable=self.v, value=2)
+        self.multi_p_rbutton.bind('<ButtonRelease-1>', self.change_multi_player)
 
         # Creates buttons for selecting an avatar as well as the start game button
         # Buttons containing images 
@@ -433,7 +434,10 @@ class AvatarWindow(tk.Frame):
         # Adds weights to frame
         self.grid_rowconfigure(0, weight=1)
         self.grid_columnconfigure(0, weight=1)
-    
+
+        # Sets default settings when loading into screen
+        self.change_single_player(None)
+
     # Sets parameters so that single player mode is enabled
     def change_single_player(self, n):
         self.player2_entry.delete(0, tk.END)
@@ -441,6 +445,7 @@ class AvatarWindow(tk.Frame):
         self.player2_entry["state"] = tk.DISABLED
         self.player2.name = "CPU"
         self.player2.CPU = True
+        self.player2.avatar = self.cpu_avatar
         self.player2_avatar_label["image"] = self.cpu_avatar
         self.player2_avi_btn1["state"] = tk.DISABLED
         self.player2_avi_btn2["state"] = tk.DISABLED
@@ -448,6 +453,20 @@ class AvatarWindow(tk.Frame):
         self.player2_avi_btn4["state"] = tk.DISABLED
         self.player2_avi_btn5["state"] = tk.DISABLED
         self.player2_avi_btn6["state"] = tk.DISABLED
+    
+    def change_multi_player(self, n):
+        self.player2_entry["state"] = tk.NORMAL
+        self.player2_entry.delete(0, tk.END)
+        self.player2.name = ""
+        self.player2.CPU = False
+        self.player2.avatar = None
+        self.player2_avatar_label["image"] = None
+        self.player2_avi_btn1["state"] = tk.ACTIVE
+        self.player2_avi_btn2["state"] = tk.ACTIVE
+        self.player2_avi_btn3["state"] = tk.ACTIVE
+        self.player2_avi_btn4["state"] = tk.ACTIVE
+        self.player2_avi_btn5["state"] = tk.ACTIVE
+        self.player2_avi_btn6["state"] = tk.ACTIVE
 
 
 
