@@ -4,6 +4,7 @@ import os, sys
 from copy import deepcopy
 from PIL  import Image, ImageTk
 
+# Backend logic and objects necessary for game to run
 class Player():
     def __init__(self, name, avatar, marker):
         self.name = name
@@ -12,6 +13,7 @@ class Player():
         self.win = False
         self.CPU = False
 
+# Nodes used specifically by linkedlists
 class LLNode():
     def __init__(self, value):
         self.value = value
@@ -53,6 +55,7 @@ class LinkedList():
             self.head_node = self.head_node.next_node
             return node_to_return
 
+# Nodes to be used by graphs
 class GNode():
     def __init__(self, coordinate):
         self.value = None
@@ -203,11 +206,7 @@ class Grid():
         return move_to_return[0]
 
 
-
-
-
-
-
+# Begins classes built as the separate windows used for the application
 # Builds frame for avatar/setup window
 class AvatarWindow(tk.Frame):
     def __init__(self, master, player1, player2):
@@ -323,40 +322,40 @@ class AvatarWindow(tk.Frame):
         # Buttons containing images 
         start_game_btn = tk.Button(self, background="#FFFFFF", width=10, height=2, highlightthickness=0, text="Start Game")
         
-        self.player1_avi_btn1 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=turtle_photo)
+        self.player1_avi_btn1 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=turtle_photo, command=lambda: self.select_avatar(turtle_photo, self.player1, self.player1_avatar_label, self.player2_avatar_label))
         self.player1_avi_btn1.image = turtle_photo
 
-        self.player1_avi_btn2 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=monkey_photo)
+        self.player1_avi_btn2 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=monkey_photo, command=lambda: self.select_avatar(monkey_photo, self.player1, self.player1_avatar_label, self.player2_avatar_label))
         self.player1_avi_btn2.image = monkey_photo
 
-        self.player1_avi_btn3 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=frog_photo)
+        self.player1_avi_btn3 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=frog_photo, command=lambda: self.select_avatar(frog_photo, self.player1, self.player1_avatar_label, self.player2_avatar_label))
         self.player1_avi_btn3.image = frog_photo
 
-        self.player1_avi_btn4 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=koala_photo)
+        self.player1_avi_btn4 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=koala_photo, command=lambda: self.select_avatar(koala_photo, self.player1, self.player1_avatar_label, self.player2_avatar_label))
         self.player1_avi_btn4.image = koala_photo
 
-        self.player1_avi_btn5 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=walrus_photo)
+        self.player1_avi_btn5 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=walrus_photo, command=lambda: self.select_avatar(walrus_photo, self.player1, self.player1_avatar_label, self.player2_avatar_label))
         self.player1_avi_btn5.image = walrus_photo
 
-        self.player1_avi_btn6 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=panda_photo)
+        self.player1_avi_btn6 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=panda_photo, command=lambda: self.select_avatar(panda_photo, self.player1, self.player1_avatar_label, self.player2_avatar_label))
         self.player1_avi_btn6.image = panda_photo
 
-        self.player2_avi_btn1 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=turtle_photo)
+        self.player2_avi_btn1 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=turtle_photo, command=lambda: self.select_avatar(turtle_photo, self.player2, self.player2_avatar_label, self.player1_avatar_label))
         self.player2_avi_btn1.image = turtle_photo
 
-        self.player2_avi_btn2 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=monkey_photo)
+        self.player2_avi_btn2 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=monkey_photo, command=lambda: self.select_avatar(monkey_photo, self.player2, self.player2_avatar_label, self.player1_avatar_label))
         self.player2_avi_btn2.image = monkey_photo
 
-        self.player2_avi_btn3 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=frog_photo)
+        self.player2_avi_btn3 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=frog_photo, command=lambda: self.select_avatar(frog_photo, self.player2, self.player2_avatar_label, self.player1_avatar_label))
         self.player2_avi_btn3.image = frog_photo
 
-        self.player2_avi_btn4 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=koala_photo)
+        self.player2_avi_btn4 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=koala_photo, command=lambda: self.select_avatar(koala_photo, self.player2, self.player2_avatar_label, self.player1_avatar_label))
         self.player2_avi_btn4.image = koala_photo
 
-        self.player2_avi_btn5 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=walrus_photo)
+        self.player2_avi_btn5 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=walrus_photo, command=lambda: self.select_avatar(walrus_photo, self.player2, self.player2_avatar_label, self.player1_avatar_label))
         self.player2_avi_btn5.image = walrus_photo
 
-        self.player2_avi_btn6 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=panda_photo)
+        self.player2_avi_btn6 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=panda_photo, command=lambda: self.select_avatar(panda_photo, self.player2, self.player2_avatar_label, self.player1_avatar_label))
         self.player2_avi_btn6.image = panda_photo
         
 
@@ -454,6 +453,7 @@ class AvatarWindow(tk.Frame):
         self.player2_avi_btn5["state"] = tk.DISABLED
         self.player2_avi_btn6["state"] = tk.DISABLED
     
+    # Sets parameters so that multiplayer mode is enabled
     def change_multi_player(self, n):
         self.player2_entry["state"] = tk.NORMAL
         self.player2_entry.delete(0, tk.END)
@@ -461,12 +461,36 @@ class AvatarWindow(tk.Frame):
         self.player2.CPU = False
         self.player2.avatar = None
         self.player2_avatar_label["image"] = None
-        self.player2_avi_btn1["state"] = tk.ACTIVE
-        self.player2_avi_btn2["state"] = tk.ACTIVE
-        self.player2_avi_btn3["state"] = tk.ACTIVE
-        self.player2_avi_btn4["state"] = tk.ACTIVE
-        self.player2_avi_btn5["state"] = tk.ACTIVE
-        self.player2_avi_btn6["state"] = tk.ACTIVE
+        for button in self.winfo_children():
+            if 'tkinter.Button' in str(type(button)):
+                print(button, 'tkinter.Button' in str(type(button)), button['image'])
+                print(button['image'] == self.player1_avatar_label['image'])
+                if button["image"] == self.player1_avatar_label['image']:
+                    button["state"] = tk.DISABLED
+                else:
+                    button["state"] = tk.ACTIVE
+    
+    # Allows users to select their own unique avatar to use during the game
+    def select_avatar(self, image, player1, label1, label2):
+        player1.avatar = image
+        label1["image"] = image
+        for button in self.winfo_children():
+            if 'tkinter.Button' in str(type(button)):
+                if len(str(button)[22:24].strip()) > 0:
+                    current_button = int(str(button)[22:24].strip())
+                else:
+                    current_button = 1
+                print(button, 'tkinter.Button' in str(type(button)), button['image'])
+                print(button['image'] == label1['image'])
+                if button["image"] == label1['image'] or button['image'] == label2['image']:
+                    button["state"] = tk.DISABLED
+                elif self.player2.CPU == True and current_button < 8:
+                    button["state"] = tk.ACTIVE
+                elif self.player2.CPU == False:
+                    button["state"] = tk.ACTIVE
+            
+
+        
 
 
 
