@@ -434,11 +434,13 @@ class AvatarWindow(tk.Frame):
         self.grid_rowconfigure(0, weight=1)
         self.grid_columnconfigure(0, weight=1)
     
+    # Sets parameters so that single player mode is enabled
     def change_single_player(self, n):
         self.player2_entry.delete(0, tk.END)
         self.player2_entry.insert(0, "CPU")
         self.player2_entry["state"] = tk.DISABLED
         self.player2.name = "CPU"
+        self.player2.CPU = True
         self.player2_avatar_label["image"] = self.cpu_avatar
         self.player2_avi_btn1["state"] = tk.DISABLED
         self.player2_avi_btn2["state"] = tk.DISABLED
