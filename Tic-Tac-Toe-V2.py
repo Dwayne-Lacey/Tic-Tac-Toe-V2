@@ -208,10 +208,13 @@ class Grid():
 # Begins classes built as the separate windows used for the application
 # Builds frame for avatar/setup window
 class AvatarWindow(tk.Frame):
-    def __init__(self, master, player1, player2):
+    def __init__(self, master, player1, player2, main):
 
         # Will inherit root window when instantiated 
         tk.Frame.__init__(self, master)
+
+        # Stores reference to root application 
+        self.main = main
 
         # Instantiates radiobutton variable and defines default state as single player mode
         self.v = tk.IntVar(value=1)
@@ -300,11 +303,15 @@ class AvatarWindow(tk.Frame):
 
         row_11_spacer = tk.Canvas(self, background="#8F8F8F", width=1, height=20, highlightthickness=0)
 
+        left_row_12_spacer = tk.Canvas(self, background="#8F8F8F", width=100, height=5, highlightthickness=0)
+        right_row_12_spacer = tk.Canvas(self, background="#8F8F8F", width=100, height=5, highlightthickness=0)
+
         # Creates labels used within GUI
         setup_label = tk.Label(self, background="#FFFFFF", width=10, height=2, highlightthickness=0, text="SETUP", font=('Segoe 16 bold'))
         self.player1_avatar_label = tk.Label(self, background="#FFFFFF", width=10, highlightthickness=0, image=CPU_avatar)
         self.player2_avatar_label = tk.Label(self, background="#FFFFFF", width=10, highlightthickness=0, image=CPU_avatar)
         player_count_label = tk.Label(self, background="#FFFFFF", width=10, height=2, highlightthickness=0, text="PLAYERS", bg="#8F8F8F", font=('Segoe 14 bold'))
+        self.error_label = tk.Label(self, background="#8F8F8F", width=10, height=2, highlightthickness=0, text="", font=('Segoe 16 bold'), fg='red')
 
         # Creates entry boxes for player names
         self.player1_entry = tk.Entry(self, background="#FFFFFF", width=10, highlightthickness=0, font=('Segoe 20 bold'), justify=tk.CENTER)
@@ -319,7 +326,7 @@ class AvatarWindow(tk.Frame):
 
         # Creates buttons for selecting an avatar as well as the start game button
         # Buttons containing images 
-        start_game_btn = tk.Button(self, background="#FFFFFF", width=15, height=2, highlightthickness=0, text="START GAME", font=('Segoe 14 bold'))
+        start_game_btn = tk.Button(self, background="#FFFFFF", width=15, height=2, highlightthickness=0, text="START GAME", font=('Segoe 14 bold'), command=lambda: self.complete_setup())
         
         self.player1_avi_btn1 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=turtle_photo, command=lambda: self.select_avatar(turtle_photo, self.player1, self.player1_avatar_label, self.player2_avatar_label))
         self.player1_avi_btn1.image = turtle_photo
@@ -403,7 +410,6 @@ class AvatarWindow(tk.Frame):
 
         row_9_spacer.grid(row=9, column=1, columnspan=19, sticky="nsew")
         
-        # Creates row 10
         row_10_spacer1.grid(row=10, column=1, sticky="nsew")
         self.player1_avi_btn4.grid(row=10, column=2, sticky="nsew")
         row_10_spacer2.grid(row=10, column=3, sticky="nsew")
@@ -428,6 +434,9 @@ class AvatarWindow(tk.Frame):
 
         row_11_spacer.grid(row=11, column=1, columnspan=19, sticky="nsew")
 
+        left_row_12_spacer.grid(row=12, column=1, columnspan=4, sticky="nsew")
+        self.error_label.grid(row=12, column=5, columnspan=10, sticky="nsew")
+        right_row_12_spacer.grid(row=12, column=15, columnspan=5, sticky="nsew")
 
         # Adds weights to frame
         self.grid_rowconfigure(0, weight=1)
@@ -494,15 +503,28 @@ class AvatarWindow(tk.Frame):
                     button["state"] = tk.ACTIVE
                 elif self.player2.CPU == False:
                     button["state"] = tk.ACTIVE
+    
+    # Completes game setup, provides error handling for players attempting to start the game without a name and then progresses to the next screen
+    def complete_setup(self):
+        player1_name = self.player1_entry.get()
+        if self.player2.CPU == False:
+            player2_name = self.player2_entry.get()
+        else:
+            player2_name = "CPU"
+        if len(player1_name) < 1 or len(player2_name) < 1:
+            self.error_label['text'] = "Please enter your name"
+        else:
+            self.player1.name = player1_name
+            self.player2.name = player2_name
+            self.main.game_frame.tkraise()
             
-
         
 
 
 
 
 class GameWindow(tk.Frame):
-    def __init__(self, master):
+    def __init__(self, master, main):
         tk.Frame.__init__(self, master)
 
 
@@ -519,9 +541,13 @@ class Application():
         # Adds title to window
         self.root.title("Tic-Tac-Toe")
 
+        # Builds game main window and enters in player specific information
+        self.game_frame = GameWindow(self.root, self)
+        self.game_frame.grid(row=1, column=1, sticky="nsew")
+
         # Builds setup window and passes in player objects to be edited within setup 
-        avatar_frame = AvatarWindow(self.root, self.player1, self.player2)
-        avatar_frame.grid(row=1, column=1, sticky="nsew")
+        self.avatar_frame = AvatarWindow(self.root, self.player1, self.player2, self)
+        self.avatar_frame.grid(row=1, column=1, sticky="nsew")
 
         # Maintains application loop until retrieving input to close application
         self.root.mainloop()
