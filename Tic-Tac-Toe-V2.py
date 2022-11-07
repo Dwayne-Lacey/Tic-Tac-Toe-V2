@@ -303,9 +303,9 @@ class AvatarWindow(tk.Frame):
 
         # Creates labels used within GUI
         setup_label = tk.Label(self, background="#FFFFFF", width=10, height=2, highlightthickness=0, text="Setup")
-        self.player1_avatar_label = tk.Label(self, background="#FFFFFF", width=10, highlightthickness=0, image=None)
+        self.player1_avatar_label = tk.Label(self, background="#FFFFFF", width=10, highlightthickness=0, image=CPU_avatar)
         self.player2_avatar_label = tk.Label(self, background="#FFFFFF", width=10, highlightthickness=0, image=CPU_avatar)
-        player_count_label = tk.Label(self, background="#FFFFFF", width=10, height=2, highlightthickness=0, text="Players?")
+        player_count_label = tk.Label(self, background="#FFFFFF", width=10, height=2, highlightthickness=0, text="PLAYERS")
 
         # Creates entry boxes for player names
         self.player1_entry = tk.Entry(self, background="#FFFFFF", width=10, highlightthickness=0)
@@ -437,6 +437,7 @@ class AvatarWindow(tk.Frame):
         # Sets default settings when loading into screen
         self.change_single_player(None)
 
+    # Helper functions for setup window
     # Sets parameters so that single player mode is enabled
     def change_single_player(self, n):
         self.player2_entry.delete(0, tk.END)
@@ -452,6 +453,16 @@ class AvatarWindow(tk.Frame):
         self.player2_avi_btn4["state"] = tk.DISABLED
         self.player2_avi_btn5["state"] = tk.DISABLED
         self.player2_avi_btn6["state"] = tk.DISABLED
+        for button in self.winfo_children():
+            if 'tkinter.Button' in str(type(button)):
+                if len(str(button)[22:24].strip()) > 0:
+                    current_button = int(str(button)[22:24].strip())
+                else:
+                    current_button = 1
+                if button["image"] == self.player1_avatar_label['image']:
+                    button["state"] = tk.DISABLED
+                elif current_button < 8:
+                    button["state"] = tk.ACTIVE
     
     # Sets parameters so that multiplayer mode is enabled
     def change_multi_player(self, n):
@@ -463,8 +474,6 @@ class AvatarWindow(tk.Frame):
         self.player2_avatar_label["image"] = None
         for button in self.winfo_children():
             if 'tkinter.Button' in str(type(button)):
-                print(button, 'tkinter.Button' in str(type(button)), button['image'])
-                print(button['image'] == self.player1_avatar_label['image'])
                 if button["image"] == self.player1_avatar_label['image']:
                     button["state"] = tk.DISABLED
                 else:
@@ -480,8 +489,6 @@ class AvatarWindow(tk.Frame):
                     current_button = int(str(button)[22:24].strip())
                 else:
                     current_button = 1
-                print(button, 'tkinter.Button' in str(type(button)), button['image'])
-                print(button['image'] == label1['image'])
                 if button["image"] == label1['image'] or button['image'] == label2['image']:
                     button["state"] = tk.DISABLED
                 elif self.player2.CPU == True and current_button < 8:
