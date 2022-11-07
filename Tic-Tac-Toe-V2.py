@@ -1,6 +1,7 @@
 import tkinter as tk
-import random
+import os, sys
 from copy import deepcopy
+from PIL  import Image, ImageTk
 
 class Player():
     def __init__(self, name, avatar, marker, image):
@@ -199,6 +200,12 @@ class Grid():
             move_to_return = available_moves[minimum_key].pop_node()
         return move_to_return[0]
 
+
+
+
+
+
+
 # Builds frame for avatar/setup window
 class AvatarWindow(tk.Frame):
     def __init__(self, master):
@@ -209,6 +216,34 @@ class AvatarWindow(tk.Frame):
         # Instantiates radiobutton variable and defines default state as single player mode
         self.v = tk.IntVar(value=1)
 
+        # Sets default state of player 2 entry box to disabled
+        self.player2_entry_state = tk.DISABLED
+
+        # Obtains working directory for program 
+        dirname, filename = os.path.split(os.path.abspath(sys.argv[0]))
+
+        # Adds in all images for player avatars
+        # All images must be saved in same folder as application to work
+        # Turtle avatar can be found at <a target="_blank" href="https://icons8.com/icon/49018/turtle">Turtle</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
+        turtle_photo = tk.PhotoImage(file=dirname + '\gturtle.png')
+
+        # Monkey avatar can be found at <a target="_blank" href="https://icons8.com/icon/62481/chimpanzee">Chimpanzee</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
+        monkey_photo = tk.PhotoImage(file=dirname + '\monkey.png')
+
+        # Frog avatar can be found at <a target="_blank" href="https://icons8.com/icon/Npta5BprV_io/frog-face">Frog Face</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
+        frog_photo = tk.PhotoImage(file=dirname + '\gfrog.png')
+
+        # Koala avatar can be found at <a target="_blank" href="https://icons8.com/icon/bxiThUWYVUpC/koala">Koala</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
+        koala_photo = tk.PhotoImage(file=dirname + '\koala.png')
+
+        # Walrus avatar can be found at <a target="_blank" href="https://icons8.com/icon/2oOXGVA1B6St/walrus">Walrus</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
+        walrus_photo = tk.PhotoImage(file=dirname + '\walrus.png')
+
+        # Panda avatar can be found at <a target="_blank" href="https://icons8.com/icon/01OJtDgOj8sL/panda">Panda</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
+        panda_photo = tk.PhotoImage(file=dirname + '\panda.png')
+
+
+        # Creates and assigns objects to frame grid
         # Creates spacers needed for GUI
         row_1_spacer = tk.Canvas(self, background="#8F8F8F", width=1, height=20, highlightthickness=0)
 
@@ -261,28 +296,52 @@ class AvatarWindow(tk.Frame):
 
         # Creates entry boxes for player names
         player1_entry = tk.Entry(self, background="#FFFFFF", width=10, highlightthickness=0)
-        player2_entry = tk.Entry(self, background="#FFFFFF", width=10, highlightthickness=0, )
+        player2_entry = tk.Entry(self, background="#FFFFFF", width=10, highlightthickness=0, state=self.player2_entry_state)
 
         # Create radio buttons to toggle single or multiplayer modes
         single_p_rbutton = tk.Radiobutton(self, text="1", variable=self.v, value=1)
         multi_p_rbutton = tk.Radiobutton(self, text="2", variable=self.v, value=2)
 
         # Creates buttons for selecting an avatar as well as the start game button
+        # Buttons containing images 
         start_game_btn = tk.Button(self, background="#FFFFFF", width=10, height=2, highlightthickness=0, text="Start Game")
+        
+        player1_avi_btn1 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=turtle_photo)
+        player1_avi_btn1.image = turtle_photo
 
-        player1_avi_btn1 = tk.Button(self, background="#FFFFFF", width=10, height=2, highlightthickness=0, text="Avi1")
-        player1_avi_btn2 = tk.Button(self, background="#FFFFFF", width=10, height=2, highlightthickness=0, text="Avi2")
-        player1_avi_btn3 = tk.Button(self, background="#FFFFFF", width=10, height=2, highlightthickness=0, text="Avi3")
-        player1_avi_btn4 = tk.Button(self, background="#FFFFFF", width=10, height=2, highlightthickness=0, text="Avi4")
-        player1_avi_btn5 = tk.Button(self, background="#FFFFFF", width=10, height=2, highlightthickness=0, text="Avi5")
-        player1_avi_btn6 = tk.Button(self, background="#FFFFFF", width=10, height=2, highlightthickness=0, text="Avi6")
+        player1_avi_btn2 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=monkey_photo)
+        player1_avi_btn2.image = monkey_photo
 
-        player2_avi_btn1 = tk.Button(self, background="#FFFFFF", width=10, height=2, highlightthickness=0, text="Avi1")
-        player2_avi_btn2 = tk.Button(self, background="#FFFFFF", width=10, height=2, highlightthickness=0, text="Avi2")
-        player2_avi_btn3 = tk.Button(self, background="#FFFFFF", width=10, height=2, highlightthickness=0, text="Avi3")
-        player2_avi_btn4 = tk.Button(self, background="#FFFFFF", width=10, height=2, highlightthickness=0, text="Avi4")
-        player2_avi_btn5 = tk.Button(self, background="#FFFFFF", width=10, height=2, highlightthickness=0, text="Avi5")
-        player2_avi_btn6 = tk.Button(self, background="#FFFFFF", width=10, height=2, highlightthickness=0, text="Avi6")
+        player1_avi_btn3 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=frog_photo)
+        player1_avi_btn3.image = frog_photo
+
+        player1_avi_btn4 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=koala_photo)
+        player1_avi_btn4.image = koala_photo
+
+        player1_avi_btn5 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=walrus_photo)
+        player1_avi_btn5.image = walrus_photo
+
+        player1_avi_btn6 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=panda_photo)
+        player1_avi_btn6.image = panda_photo
+
+        player2_avi_btn1 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=turtle_photo)
+        player2_avi_btn1.image = turtle_photo
+
+        player2_avi_btn2 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=monkey_photo)
+        player2_avi_btn2.image = monkey_photo
+
+        player2_avi_btn3 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=frog_photo)
+        player2_avi_btn3.image = frog_photo
+
+        player2_avi_btn4 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=koala_photo)
+        player2_avi_btn4.image = koala_photo
+
+        player2_avi_btn5 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=walrus_photo)
+        player2_avi_btn5.image = walrus_photo
+
+        player2_avi_btn6 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=panda_photo)
+        player2_avi_btn6.image = panda_photo
+        
 
         # Builds out window
         row_1_spacer.grid(row=1, column=1, sticky="nsew", columnspan=19)
