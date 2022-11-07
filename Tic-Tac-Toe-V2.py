@@ -1,14 +1,16 @@
+from ast import Lambda
 import tkinter as tk
 import os, sys
 from copy import deepcopy
 from PIL  import Image, ImageTk
 
 class Player():
-    def __init__(self, name, avatar, marker, image):
+    def __init__(self, name, avatar, marker):
         self.name = name
         self.avatar = avatar
         self.marker = marker
         self.win = False
+        self.CPU = False
 
 class LLNode():
     def __init__(self, value):
@@ -208,7 +210,7 @@ class Grid():
 
 # Builds frame for avatar/setup window
 class AvatarWindow(tk.Frame):
-    def __init__(self, master):
+    def __init__(self, master, player1, player2):
 
         # Will inherit root window when instantiated 
         tk.Frame.__init__(self, master)
@@ -216,8 +218,9 @@ class AvatarWindow(tk.Frame):
         # Instantiates radiobutton variable and defines default state as single player mode
         self.v = tk.IntVar(value=1)
 
-        # Sets default state of player 2 entry box to disabled
-        self.player2_entry_state = tk.DISABLED
+        # Stores references to each player object
+        self.player1 = player1
+        self.player2 = player2
 
         # Obtains working directory for program 
         dirname, filename = os.path.split(os.path.abspath(sys.argv[0]))
@@ -242,6 +245,17 @@ class AvatarWindow(tk.Frame):
         # Panda avatar can be found at <a target="_blank" href="https://icons8.com/icon/01OJtDgOj8sL/panda">Panda</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
         panda_photo = tk.PhotoImage(file=dirname + '\panda.png')
 
+        # Question mark avatar can be found at <a target="_blank" href="https://icons8.com/icon/103873/question-mark">Question Mark</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
+        CPU_avatar = tk.PhotoImage(file=dirname + '\question.png')
+
+        # Stores each avatar in object for later reference by methods
+        self.turtle = turtle_photo
+        self.monkey = monkey_photo
+        self.frog = frog_photo
+        self.koala = koala_photo
+        self.walrus = walrus_photo
+        self.panda = panda_photo
+        self.cpu_avatar = CPU_avatar
 
         # Creates and assigns objects to frame grid
         # Creates spacers needed for GUI
@@ -290,57 +304,59 @@ class AvatarWindow(tk.Frame):
 
         # Creates labels used within GUI
         setup_label = tk.Label(self, background="#FFFFFF", width=10, height=2, highlightthickness=0, text="Setup")
-        player1_avatar_label = tk.Label(self, background="#FFFFFF", width=10, height=2, highlightthickness=0, text="Avatar1")
-        player2_avatar_label = tk.Label(self, background="#FFFFFF", width=10, height=2, highlightthickness=0, text="Avatar1")
+        self.player1_avatar_label = tk.Label(self, background="#FFFFFF", width=10, highlightthickness=0, image=None)
+        self.player2_avatar_label = tk.Label(self, background="#FFFFFF", width=10, highlightthickness=0, image=CPU_avatar)
         player_count_label = tk.Label(self, background="#FFFFFF", width=10, height=2, highlightthickness=0, text="Players?")
 
         # Creates entry boxes for player names
-        player1_entry = tk.Entry(self, background="#FFFFFF", width=10, highlightthickness=0)
-        player2_entry = tk.Entry(self, background="#FFFFFF", width=10, highlightthickness=0, state=self.player2_entry_state)
+        self.player1_entry = tk.Entry(self, background="#FFFFFF", width=10, highlightthickness=0)
+        self.player2_entry = tk.Entry(self, background="#FFFFFF", width=10, highlightthickness=0)
 
         # Create radio buttons to toggle single or multiplayer modes
-        single_p_rbutton = tk.Radiobutton(self, text="1", variable=self.v, value=1)
-        multi_p_rbutton = tk.Radiobutton(self, text="2", variable=self.v, value=2)
+        self.single_p_rbutton = tk.Radiobutton(self, text="1", variable=self.v, value=1)
+        self.single_p_rbutton.bind('<ButtonRelease-1>', self.change_single_player)
+
+        self.multi_p_rbutton = tk.Radiobutton(self, text="2", variable=self.v, value=2)
 
         # Creates buttons for selecting an avatar as well as the start game button
         # Buttons containing images 
         start_game_btn = tk.Button(self, background="#FFFFFF", width=10, height=2, highlightthickness=0, text="Start Game")
         
-        player1_avi_btn1 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=turtle_photo)
-        player1_avi_btn1.image = turtle_photo
+        self.player1_avi_btn1 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=turtle_photo)
+        self.player1_avi_btn1.image = turtle_photo
 
-        player1_avi_btn2 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=monkey_photo)
-        player1_avi_btn2.image = monkey_photo
+        self.player1_avi_btn2 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=monkey_photo)
+        self.player1_avi_btn2.image = monkey_photo
 
-        player1_avi_btn3 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=frog_photo)
-        player1_avi_btn3.image = frog_photo
+        self.player1_avi_btn3 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=frog_photo)
+        self.player1_avi_btn3.image = frog_photo
 
-        player1_avi_btn4 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=koala_photo)
-        player1_avi_btn4.image = koala_photo
+        self.player1_avi_btn4 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=koala_photo)
+        self.player1_avi_btn4.image = koala_photo
 
-        player1_avi_btn5 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=walrus_photo)
-        player1_avi_btn5.image = walrus_photo
+        self.player1_avi_btn5 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=walrus_photo)
+        self.player1_avi_btn5.image = walrus_photo
 
-        player1_avi_btn6 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=panda_photo)
-        player1_avi_btn6.image = panda_photo
+        self.player1_avi_btn6 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=panda_photo)
+        self.player1_avi_btn6.image = panda_photo
 
-        player2_avi_btn1 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=turtle_photo)
-        player2_avi_btn1.image = turtle_photo
+        self.player2_avi_btn1 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=turtle_photo)
+        self.player2_avi_btn1.image = turtle_photo
 
-        player2_avi_btn2 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=monkey_photo)
-        player2_avi_btn2.image = monkey_photo
+        self.player2_avi_btn2 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=monkey_photo)
+        self.player2_avi_btn2.image = monkey_photo
 
-        player2_avi_btn3 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=frog_photo)
-        player2_avi_btn3.image = frog_photo
+        self.player2_avi_btn3 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=frog_photo)
+        self.player2_avi_btn3.image = frog_photo
 
-        player2_avi_btn4 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=koala_photo)
-        player2_avi_btn4.image = koala_photo
+        self.player2_avi_btn4 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=koala_photo)
+        self.player2_avi_btn4.image = koala_photo
 
-        player2_avi_btn5 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=walrus_photo)
-        player2_avi_btn5.image = walrus_photo
+        self.player2_avi_btn5 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=walrus_photo)
+        self.player2_avi_btn5.image = walrus_photo
 
-        player2_avi_btn6 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=panda_photo)
-        player2_avi_btn6.image = panda_photo
+        self.player2_avi_btn6 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=panda_photo)
+        self.player2_avi_btn6.image = panda_photo
         
 
         # Builds out window
@@ -353,62 +369,62 @@ class AvatarWindow(tk.Frame):
         row_3_spacer.grid(row=3, column=1, sticky="nsew", columnspan=19)
 
         row_4_spacer1.grid(row=4, column=1, sticky="nsew")
-        player1_entry.grid(row=4, column=2, columnspan=5, sticky="nsew")
+        self.player1_entry.grid(row=4, column=2, columnspan=5, sticky="nsew")
         row_4_spacer2.grid(row=4, column=7, columnspan=7, sticky="nsew")
-        player2_entry.grid(row=4, column=14, columnspan=5, sticky="nsew")
+        self.player2_entry.grid(row=4, column=14, columnspan=5, sticky="nsew")
         row_4_spacer3.grid(row=4, column=19, sticky="nsew")
     
         row_5_spacer.grid(row=5, column=1, sticky="nsew", columnspan=19)
 
         row_6_spacer1.grid(row=6, column=1, columnspan=3, sticky="nsew")
-        player1_avatar_label.grid(row=6, column=4, sticky="nsew")
+        self.player1_avatar_label.grid(row=6, column=4, sticky="nsew")
         row_6_spacer2.grid(row=6, column=5, columnspan=3, sticky="nsew")
         start_game_btn.grid(row=6, column=8, columnspan=5, sticky="nsew")
         row_6_spacer3.grid(row=6, column=13, columnspan=3, sticky="nsew")
-        player2_avatar_label.grid(row=6, column=16, sticky="nsew")
+        self.player2_avatar_label.grid(row=6, column=16, sticky="nsew")
         row_6_spacer4.grid(row=6, column=17, columnspan=3, sticky="nsew")
 
         row_7_spacer.grid(row=7, column=1, columnspan=19, sticky="nsew")
 
         row_8_spacer1.grid(row=8, column=1, sticky="nsew")
-        player1_avi_btn1.grid(row=8, column=2, sticky="nsew")
+        self.player1_avi_btn1.grid(row=8, column=2, sticky="nsew")
         row_8_spacer2.grid(row=8, column=3, sticky="nsew")
-        player1_avi_btn2.grid(row=8, column=4, sticky="nsew")
+        self.player1_avi_btn2.grid(row=8, column=4, sticky="nsew")
         row_8_spacer3.grid(row=8, column=5, sticky="nsew")
-        player1_avi_btn3.grid(row=8, column=6, sticky="nsew")
+        self.player1_avi_btn3.grid(row=8, column=6, sticky="nsew")
         row_8_spacer4.grid(row=8, column=7, sticky="nsew")
         player_count_label.grid(row=8, column=8, columnspan=5, sticky="nsew")
         row_8_spacer5.grid(row=8, column=13, sticky="nsew")
-        player2_avi_btn1.grid(row=8, column=14, sticky="nsew")
+        self.player2_avi_btn1.grid(row=8, column=14, sticky="nsew")
         row_8_spacer6.grid(row=8, column=15, sticky="nsew")
-        player2_avi_btn2.grid(row=8, column=16, sticky="nsew")
+        self.player2_avi_btn2.grid(row=8, column=16, sticky="nsew")
         row_8_spacer7.grid(row=8, column=17, sticky="nsew")
-        player2_avi_btn3.grid(row=8, column=18, sticky="nsew")
+        self.player2_avi_btn3.grid(row=8, column=18, sticky="nsew")
         row_8_spacer8.grid(row=8, column=19, sticky="nsew")
 
         row_9_spacer.grid(row=9, column=1, columnspan=19, sticky="nsew")
         
         # Creates row 10
         row_10_spacer1.grid(row=10, column=1, sticky="nsew")
-        player1_avi_btn4.grid(row=10, column=2, sticky="nsew")
+        self.player1_avi_btn4.grid(row=10, column=2, sticky="nsew")
         row_10_spacer2.grid(row=10, column=3, sticky="nsew")
-        player1_avi_btn5.grid(row=10, column=4, sticky="nsew")
+        self.player1_avi_btn5.grid(row=10, column=4, sticky="nsew")
         row_10_spacer3.grid(row=10, column=5, sticky="nsew")
-        player1_avi_btn6.grid(row=10, column=6, sticky="nsew")
+        self.player1_avi_btn6.grid(row=10, column=6, sticky="nsew")
         row_10_spacer4.grid(row=10, column=7, sticky="nsew")
 
         # Buttons to select single or multiplayer mode as well as space between radiobuttons
-        single_p_rbutton.grid(row=10, column=8, columnspan=2, sticky="nsew")
+        self.single_p_rbutton.grid(row=10, column=8, columnspan=2, sticky="nsew")
         row_10_spacer5.grid(row=10, column=10, sticky="nsew")
-        multi_p_rbutton.grid(row=10, column=11, columnspan=2, sticky="nsew")
+        self.multi_p_rbutton.grid(row=10, column=11, columnspan=2, sticky="nsew")
 
         
         row_10_spacer6.grid(row=10, column=13, sticky="nsew")
-        player2_avi_btn4.grid(row=10, column=14, sticky="nsew")
+        self.player2_avi_btn4.grid(row=10, column=14, sticky="nsew")
         row_10_spacer7.grid(row=10, column=15, sticky="nsew")
-        player2_avi_btn5.grid(row=10, column=16, sticky="nsew")
+        self.player2_avi_btn5.grid(row=10, column=16, sticky="nsew")
         row_10_spacer8.grid(row=10, column=17, sticky="nsew")
-        player2_avi_btn6.grid(row=10, column=18, sticky="nsew")
+        self.player2_avi_btn6.grid(row=10, column=18, sticky="nsew")
         row_10_spacer9.grid(row=10, column=19, sticky="nsew")
 
         row_11_spacer.grid(row=11, column=1, columnspan=19, sticky="nsew")
@@ -417,6 +433,19 @@ class AvatarWindow(tk.Frame):
         # Adds weights to frame
         self.grid_rowconfigure(0, weight=1)
         self.grid_columnconfigure(0, weight=1)
+    
+    def change_single_player(self, n):
+        self.player2_entry.delete(0, tk.END)
+        self.player2_entry.insert(0, "CPU")
+        self.player2_entry["state"] = tk.DISABLED
+        self.player2.name = "CPU"
+        self.player2_avatar_label["image"] = self.cpu_avatar
+        self.player2_avi_btn1["state"] = tk.DISABLED
+        self.player2_avi_btn2["state"] = tk.DISABLED
+        self.player2_avi_btn3["state"] = tk.DISABLED
+        self.player2_avi_btn4["state"] = tk.DISABLED
+        self.player2_avi_btn5["state"] = tk.DISABLED
+        self.player2_avi_btn6["state"] = tk.DISABLED
 
 
 
@@ -434,10 +463,15 @@ class Application():
         # Instantiates application
         self.root = tk.Tk()
 
+        # Creates players 1 and 2 objects 
+        self.player1 = Player(name="", avatar=None, marker="X")
+        self.player2 = Player(name="CPU", avatar=None, marker="O")
+
         # Adds title to window
         self.root.title("Tic-Tac-Toe")
 
-        avatar_frame = AvatarWindow(self.root)
+        # Builds setup window and passes in player objects to be edited within setup 
+        avatar_frame = AvatarWindow(self.root, self.player1, self.player2)
         avatar_frame.grid(row=1, column=1, sticky="nsew")
 
         # Maintains application loop until retrieving input to close application
