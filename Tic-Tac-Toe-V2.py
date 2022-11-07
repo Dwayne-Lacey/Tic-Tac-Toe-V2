@@ -2,7 +2,6 @@ from ast import Lambda
 import tkinter as tk
 import os, sys
 from copy import deepcopy
-from PIL  import Image, ImageTk
 
 # Backend logic and objects necessary for game to run
 class Player():
@@ -302,25 +301,25 @@ class AvatarWindow(tk.Frame):
         row_11_spacer = tk.Canvas(self, background="#8F8F8F", width=1, height=20, highlightthickness=0)
 
         # Creates labels used within GUI
-        setup_label = tk.Label(self, background="#FFFFFF", width=10, height=2, highlightthickness=0, text="Setup")
+        setup_label = tk.Label(self, background="#FFFFFF", width=10, height=2, highlightthickness=0, text="SETUP", font=('Segoe 16 bold'))
         self.player1_avatar_label = tk.Label(self, background="#FFFFFF", width=10, highlightthickness=0, image=CPU_avatar)
         self.player2_avatar_label = tk.Label(self, background="#FFFFFF", width=10, highlightthickness=0, image=CPU_avatar)
-        player_count_label = tk.Label(self, background="#FFFFFF", width=10, height=2, highlightthickness=0, text="PLAYERS")
+        player_count_label = tk.Label(self, background="#FFFFFF", width=10, height=2, highlightthickness=0, text="PLAYERS", bg="#8F8F8F", font=('Segoe 14 bold'))
 
         # Creates entry boxes for player names
-        self.player1_entry = tk.Entry(self, background="#FFFFFF", width=10, highlightthickness=0)
-        self.player2_entry = tk.Entry(self, background="#FFFFFF", width=10, highlightthickness=0)
+        self.player1_entry = tk.Entry(self, background="#FFFFFF", width=10, highlightthickness=0, font=('Segoe 20 bold'), justify=tk.CENTER)
+        self.player2_entry = tk.Entry(self, background="#FFFFFF", width=10, highlightthickness=0, font=('Segoe 20 bold'), justify=tk.CENTER)
 
         # Create radio buttons to toggle single or multiplayer modes
-        self.single_p_rbutton = tk.Radiobutton(self, text="1", variable=self.v, value=1)
+        self.single_p_rbutton = tk.Radiobutton(self, text="1", variable=self.v, value=1, activebackground="#8F8F8F", bg="#8F8F8F", font=('Segoe 14 bold'))
         self.single_p_rbutton.bind('<ButtonRelease-1>', self.change_single_player)
 
-        self.multi_p_rbutton = tk.Radiobutton(self, text="2", variable=self.v, value=2)
+        self.multi_p_rbutton = tk.Radiobutton(self, text="2", variable=self.v, value=2, activebackground="#8F8F8F", bg="#8F8F8F", font=('Segoe 14 bold'))
         self.multi_p_rbutton.bind('<ButtonRelease-1>', self.change_multi_player)
 
         # Creates buttons for selecting an avatar as well as the start game button
         # Buttons containing images 
-        start_game_btn = tk.Button(self, background="#FFFFFF", width=10, height=2, highlightthickness=0, text="Start Game")
+        start_game_btn = tk.Button(self, background="#FFFFFF", width=15, height=2, highlightthickness=0, text="START GAME", font=('Segoe 14 bold'))
         
         self.player1_avi_btn1 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=turtle_photo, command=lambda: self.select_avatar(turtle_photo, self.player1, self.player1_avatar_label, self.player2_avatar_label))
         self.player1_avi_btn1.image = turtle_photo
@@ -362,9 +361,9 @@ class AvatarWindow(tk.Frame):
         # Builds out window
         row_1_spacer.grid(row=1, column=1, sticky="nsew", columnspan=19)
         
-        left_row_2_spacer.grid(row=2, column=1, columnspan=7, sticky="nsew")
-        setup_label.grid(row=2, column=8, columnspan=5, sticky="nsew")
-        right_row_2_spacer.grid(row=2, column=13, columnspan=7, sticky="nsew")
+        left_row_2_spacer.grid(row=2, column=1, columnspan=5, sticky="nsew")
+        setup_label.grid(row=2, column=6, columnspan=9, sticky="nsew")
+        right_row_2_spacer.grid(row=2, column=15, columnspan=5, sticky="nsew")
 
         row_3_spacer.grid(row=3, column=1, sticky="nsew", columnspan=19)
 
@@ -503,12 +502,10 @@ class AvatarWindow(tk.Frame):
 
 
 class GameWindow(tk.Frame):
-    def __init__(self, *args, **kwargs):
-        tk.Frame.__init__(self, *args, **kwargs)
+    def __init__(self, master):
+        tk.Frame.__init__(self, master)
 
-class WinnerWindow(tk.Frame):
-    def __init__(self, *args, **kwargs):
-        tk.Frame.__init__(self, *args, **kwargs)
+
 
 class Application():
     def __init__(self):
