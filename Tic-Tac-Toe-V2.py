@@ -576,6 +576,13 @@ class GameWindow(tk.Frame):
 
         row11_spacer = tk.Canvas(self, background="#8F8F8F", width=1, height=20, highlightthickness=0)
 
+        # Creates all labels needed for game window
+        status_label = tk.Label(self, background="#FFFFFF", width=10, height=2, highlightthickness=0, text="status placeholder", font=('Segoe 16 bold'))
+        self.player1_avatar_label = tk.Label(self, background="#FFFFFF", width=10, highlightthickness=0, image=main.player1.avatar)
+        self.player2_avatar_label = tk.Label(self, background="#FFFFFF", width=10, highlightthickness=0, image=main.player2.avatar)
+        self.player1_name_label = tk.Label(self, background="#FFFFFF", width=10, highlightthickness=0, text=main.player1.name)
+        self.player2_name_label = tk.Label(self, background="#FFFFFF", width=10, highlightthickness=0, image=main.player2.name)
+
 
 class Application():
     def __init__(self):
