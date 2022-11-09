@@ -533,6 +533,12 @@ class GameWindow(tk.Frame):
         # Stores reference to root application 
         self.main = main
 
+        # Stores all buttons for grid
+        self.grid_buttons = {}
+
+        # Stores the current turn
+        self.current_player = None
+
         # Creates all spacers needed for game window
         row1_spacer = tk.Canvas(self, background="#8F8F8F", width=1, height=20, highlightthickness=0)
 
@@ -577,11 +583,19 @@ class GameWindow(tk.Frame):
         row11_spacer = tk.Canvas(self, background="#8F8F8F", width=1, height=20, highlightthickness=0)
 
         # Creates all labels needed for game window
-        status_label = tk.Label(self, background="#FFFFFF", width=10, height=2, highlightthickness=0, text="status placeholder", font=('Segoe 16 bold'))
+        self.status_label = tk.Label(self, background="#FFFFFF", width=10, height=2, highlightthickness=0, text="status placeholder", font=('Segoe 16 bold'))
         self.player1_avatar_label = tk.Label(self, background="#FFFFFF", width=10, highlightthickness=0, image=main.player1.avatar)
         self.player2_avatar_label = tk.Label(self, background="#FFFFFF", width=10, highlightthickness=0, image=main.player2.avatar)
         self.player1_name_label = tk.Label(self, background="#FFFFFF", width=10, highlightthickness=0, text=main.player1.name)
-        self.player2_name_label = tk.Label(self, background="#FFFFFF", width=10, highlightthickness=0, image=main.player2.name)
+        self.player2_name_label = tk.Label(self, background="#FFFFFF", width=10, highlightthickness=0, text=main.player2.name)
+
+        # Creates buttons needed for game window
+        for y in range(1, 4):
+            for x in range(1, 4):
+                self.grid_buttons[(y,x)] = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=self.grid[(y,x)].image, command=lambda: main.grid.place_marker(self.current_player, (y,x)))
+        self.reset_board = tk.Button(self, background="#FFFFFF", highlightthickness=0)
+        self.setup_button = tk.Button(self, background="#FFFFFF", highlightthickness=0)
+        
 
 
 class Application():
@@ -592,6 +606,10 @@ class Application():
         # Creates players 1 and 2 objects 
         self.player1 = Player(name="", avatar=None, marker="X")
         self.player2 = Player(name="CPU", avatar=None, marker="O")
+
+        # Creates grid to be used for game
+        self.grid = Grid()
+        self.grid.build_grid()
 
         # Adds title to window
         self.root.title("Tic-Tac-Toe")
