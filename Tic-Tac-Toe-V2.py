@@ -80,6 +80,7 @@ class Grid():
     def place_marker(self, player, coordinate):
         if self.grid[coordinate].value == None:
             self.grid[coordinate].value = player.marker
+            self.grid[coordinate].image = player.avatar
             return True
         else:
             return False
@@ -525,8 +526,55 @@ class AvatarWindow(tk.Frame):
 
 class GameWindow(tk.Frame):
     def __init__(self, master, main):
+        
+        # Will inherit root window when instantiated 
         tk.Frame.__init__(self, master)
 
+        # Stores reference to root application 
+        self.main = main
+
+        # Creates all spacers needed for game window
+        row1_spacer = tk.Canvas(self, background="#8F8F8F", width=1, height=20, highlightthickness=0)
+
+        row2_spacer1 = tk.Canvas(self, background="#8F8F8F", width=1, height=20, highlightthickness=0)
+        row2_spacer2 = tk.Canvas(self, background="#8F8F8F", width=1, height=20, highlightthickness=0)
+
+        row3_spacer = tk.Canvas(self, background="#8F8F8F", width=1, height=20, highlightthickness=0)
+
+        row4_spacer1 = tk.Canvas(self, background="#8F8F8F", width=1, height=20, highlightthickness=0)
+        row4_spacer2 = tk.Canvas(self, background="#8F8F8F", width=1, height=20, highlightthickness=0)
+        row4_spacer3 = tk.Canvas(self, background="#8F8F8F", width=1, height=20, highlightthickness=0)
+        row4_spacer4 = tk.Canvas(self, background="#8F8F8F", width=1, height=20, highlightthickness=0)
+
+        row5_spacer1 = tk.Canvas(self, background="#8F8F8F", width=1, height=20, highlightthickness=0)
+        row5_spacer2 = tk.Canvas(self, background="#8F8F8F", width=1, height=20, highlightthickness=0)
+        row5_spacer3 = tk.Canvas(self, background="#8F8F8F", width=1, height=20, highlightthickness=0)
+
+        row6_spacer1 = tk.Canvas(self, background="#8F8F8F", width=1, height=20, highlightthickness=0)
+        row6_spacer2 = tk.Canvas(self, background="#8F8F8F", width=1, height=20, highlightthickness=0)
+        row6_spacer3 = tk.Canvas(self, background="#8F8F8F", width=1, height=20, highlightthickness=0)
+        row6_spacer4 = tk.Canvas(self, background="#8F8F8F", width=1, height=20, highlightthickness=0)
+        row6_spacer5 = tk.Canvas(self, background="#8F8F8F", width=1, height=20, highlightthickness=0)
+        row6_spacer6 = tk.Canvas(self, background="#8F8F8F", width=1, height=20, highlightthickness=0)
+
+        row7_spacer1 = tk.Canvas(self, background="#8F8F8F", width=1, height=20, highlightthickness=0)
+        row7_spacer2 = tk.Canvas(self, background="#8F8F8F", width=1, height=20, highlightthickness=0)
+        row7_spacer3 = tk.Canvas(self, background="#8F8F8F", width=1, height=20, highlightthickness=0)
+
+        row8_spacer1 = tk.Canvas(self, background="#8F8F8F", width=1, height=20, highlightthickness=0)
+        row8_spacer2 = tk.Canvas(self, background="#8F8F8F", width=1, height=20, highlightthickness=0)
+        row8_spacer3 = tk.Canvas(self, background="#8F8F8F", width=1, height=20, highlightthickness=0)
+        row8_spacer4 = tk.Canvas(self, background="#8F8F8F", width=1, height=20, highlightthickness=0)
+        row8_spacer5 = tk.Canvas(self, background="#8F8F8F", width=1, height=20, highlightthickness=0)
+        row8_spacer6 = tk.Canvas(self, background="#8F8F8F", width=1, height=20, highlightthickness=0)
+
+        row9_spacer = tk.Canvas(self, background="#8F8F8F", width=1, height=20, highlightthickness=0)
+
+        row10_spacer1 = tk.Canvas(self, background="#8F8F8F", width=1, height=20, highlightthickness=0)
+        row10_spacer2 = tk.Canvas(self, background="#8F8F8F", width=1, height=20, highlightthickness=0)
+        row10_spacer3 = tk.Canvas(self, background="#8F8F8F", width=1, height=20, highlightthickness=0)
+
+        row11_spacer = tk.Canvas(self, background="#8F8F8F", width=1, height=20, highlightthickness=0)
 
 
 class Application():
