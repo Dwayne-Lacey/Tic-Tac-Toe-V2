@@ -188,6 +188,9 @@ class Grid():
             elif win == None and depth == 3:
                 moves[4] = LinkedList()
                 moves[4].add_tail_node(path)
+            elif nodes_placed == 9:
+                moves[4] = LinkedList()
+                moves[4].add_tail_node(path)
         
         # If there's been a recursion depth of 3 but fewer than 5 nodes have been placed down, there's no possibility of winning path being found
         # Stores all potential paths that haven't had at least 5 nodes placed in dictionary key 4
