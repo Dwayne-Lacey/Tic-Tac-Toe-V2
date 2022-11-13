@@ -722,6 +722,10 @@ class Application():
         # Instantiates application
         self.root = tk.Tk()
 
+        # gppicon.ico must be saved in same directory as application
+        dirname, filename = os.path.split(os.path.abspath(sys.argv[0]))
+        self.root.iconbitmap(dirname + '\gppicon.ico')
+
         # Creates players 1 and 2 objects 
         self.player1 = Player(name="", avatar=None, marker="X")
         self.player2 = Player(name="CPU", avatar=None, marker="O")
