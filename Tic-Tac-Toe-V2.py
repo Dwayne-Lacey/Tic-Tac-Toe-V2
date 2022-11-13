@@ -233,7 +233,7 @@ class AvatarWindow(tk.Frame):
     def __init__(self, master, player1, player2, main):
 
         # Will inherit root window when instantiated 
-        tk.Frame.__init__(self, master)
+        tk.Frame.__init__(self, master, background="#8F8F8F")
 
         # Stores reference to root application 
         self.main = main
@@ -555,7 +555,7 @@ class GameWindow(tk.Frame):
     def __init__(self, master, main):
         
         # Will inherit root window when instantiated 
-        tk.Frame.__init__(self, master)
+        tk.Frame.__init__(self, master, background="#8F8F8F")
 
         # Stores reference to root application 
         self.main = main
@@ -599,12 +599,12 @@ class GameWindow(tk.Frame):
         row7_spacer2 = tk.Canvas(self, background="#000000", width=10, height=10, highlightthickness=0)
         row7_spacer3 = tk.Canvas(self, background="#8F8F8F", width=10, height=10, highlightthickness=0)
 
-        row8_spacer1 = tk.Canvas(self, background="#8F8F8F", width=130, height=20, highlightthickness=0)
+        row8_spacer1 = tk.Canvas(self, background="#8F8F8F", width=131, height=20, highlightthickness=0)
         row8_spacer2 = tk.Canvas(self, background="#8F8F8F", width=10, height=20, highlightthickness=0)
         row8_spacer3 = tk.Canvas(self, background="#000000", width=10, height=20, highlightthickness=0)
         row8_spacer4 = tk.Canvas(self, background="#000000", width=10, height=20, highlightthickness=0)
         row8_spacer5 = tk.Canvas(self, background="#8F8F8F", width=10, height=20, highlightthickness=0)
-        row8_spacer6 = tk.Canvas(self, background="#8F8F8F", width=130, height=20, highlightthickness=0)
+        row8_spacer6 = tk.Canvas(self, background="#8F8F8F", width=131, height=20, highlightthickness=0)
 
         row9_spacer = tk.Canvas(self, background="#8F8F8F", width=1, height=20, highlightthickness=0)
 
@@ -619,8 +619,8 @@ class GameWindow(tk.Frame):
         self.player1_avatar_label = tk.Label(self, background="#FFFFFF", width=10, highlightthickness=0)
         self.player2_avatar_label = tk.Label(self, background="#FFFFFF", width=10, highlightthickness=0)
 
-        self.player1_name_label = tk.Label(self, background="#FFFFFF", width=10, highlightthickness=0)
-        self.player2_name_label = tk.Label(self, background="#FFFFFF", width=10, highlightthickness=0)
+        self.player1_name_label = tk.Label(self, background="#8F8F8F", width=8, highlightthickness=0, font=('Segoe 10 bold'))
+        self.player2_name_label = tk.Label(self, background="#8F8F8F", width=8, highlightthickness=0, font=('Segoe 10 bold'))
 
         # Creates buttons needed for game window
         self.board_buttons1_1 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=placeholder_image, command=lambda: main.board.place_marker(self.main, self.board_buttons1_1, self.main.current_turn, (1,1)))
