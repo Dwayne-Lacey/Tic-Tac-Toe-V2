@@ -227,7 +227,6 @@ class Grid():
             move_to_return = available_moves[minimum_key].pop_node()
         return move_to_return[0]
 
-
 # Begins classes built as the separate windows used for the application
 # Builds frame for avatar/setup window
 class AvatarWindow(tk.Frame):
@@ -387,7 +386,6 @@ class AvatarWindow(tk.Frame):
         self.player2_avi_btn6 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=panda_photo, command=lambda: self.select_avatar(panda_photo, self.main.player2, self.player2_avatar_label, self.player1_avatar_label))
         self.player2_avi_btn6.image = panda_photo
         
-
         # Builds out window
         row_1_spacer.grid(row=1, column=1, sticky="nsew", columnspan=19)
         
@@ -654,7 +652,6 @@ class GameWindow(tk.Frame):
 
         self.all_board_buttons = {(1,1): self.board_buttons1_1, (1,2): self.board_buttons1_2, (1,3): self.board_buttons1_3, (2,1): self.board_buttons2_1, (2,2): self.board_buttons2_2, (2,3): self.board_buttons2_3, (3,1): self.board_buttons3_1, (3,2): self.board_buttons3_2, (3,3): self.board_buttons3_3}
 
-
         self.reset_board = tk.Button(self, background="#FFFFFF", highlightthickness=0, text="Reset", command=main.board_reset)
         self.setup_button = tk.Button(self, background="#FFFFFF", highlightthickness=0, text="Change Name", command=main.change_settings)
         
@@ -719,7 +716,7 @@ class GameWindow(tk.Frame):
 
         self.current_player = main.player1
 
-
+# Builds out the application and establishes important widely used variables
 class Application():
     def __init__(self):
         # Instantiates application
@@ -780,10 +777,6 @@ class Application():
             button['image'] = self.game_frame.placeholder_image
             button.image = self.game_frame.placeholder_image
 
-
+# Begins execution of the application
 new_game = Application()
 
-# print(all_moves)
-            # self.grid[coordinate].value = player.marker
-            # board_button['image'] = player.avatar
-            # board_button.image = player.avatar
