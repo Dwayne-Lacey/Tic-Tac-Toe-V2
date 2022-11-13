@@ -1,7 +1,7 @@
-from ast import Lambda
 import tkinter as tk
 import os, sys
 from copy import deepcopy
+from random import choice
 
 # Backend logic and objects necessary for game to run
 class Player():
@@ -77,12 +77,29 @@ class Grid():
             node.image = None
     
     # This method places a marker down on the player's chosen space
-    def place_marker(self, board_button, player, coordinate):
-        if self.grid[coordinate].value == None:
+    def place_marker(self, main, board_button, player, coordinate):
+        if self.grid[coordinate].value == None and main.game_won == False:
             self.grid[coordinate].value = player.marker
-            self.grid[coordinate].image = player.avatar
             board_button['image'] = player.avatar
             board_button.image = player.avatar
+
+            # Switches player turn after placing player's marker down
+            if main.current_turn == main.player1:
+                main.current_turn = main.player2
+            else:
+                main.current_turn = main.player1
+            win = self.node_search(main.player1, main.player2, main.board.grid)
+            placed_nodes = self.count_placed_nodes(self.grid)
+            if win != None:
+                main.game_frame.status_label['text'] = win.name + " Wins!"
+                main.game_won = True
+                return True
+            elif placed_nodes == 9:
+                main.game_frame.status_label['text'] = 'Tied Game!'
+                main.game_won = True
+                return True
+            main.game_frame.status_label['text'] = main.current_turn.name + "'s " + "Turn"
+            main.CPU_turn()
             return True
         else:
             return False
@@ -202,6 +219,10 @@ class Grid():
         elif "player" in available_moves.keys():
             move_to_return = available_moves["player"].pop_node()
             return move_to_return[1]
+        elif self.count_placed_nodes(self.grid) == 8:
+            for node in self.grid.values():
+                if node.value == None:
+                    return node.coordinate
         else:
             minimum_key = min(list(available_moves.keys()))
             move_to_return = available_moves[minimum_key].pop_node()
@@ -518,6 +539,8 @@ class AvatarWindow(tk.Frame):
             self.error_label['text'] = "Please enter your name"
         elif len(player1_name) > 9 or len(player2_name) > 9:
             self.error_label['text'] = "Name cannot exceed 9 characters"
+        elif self.main.player1.avatar == None or self.main.player2.avatar == None:
+            self.error_label['text'] = "Please choose an avatar"
         else:
             self.main.player1.name = player1_name
             self.main.player2.name = player2_name
@@ -527,7 +550,10 @@ class AvatarWindow(tk.Frame):
             self.main.game_frame.player1_avatar_label.image = self.main.player1.avatar
             self.main.game_frame.player2_avatar_label['image'] = self.main.player2.avatar
             self.main.game_frame.player2_avatar_label.image = self.main.player2.avatar
+            self.main.decide_first_turn()
+            self.main.game_frame.status_label['text'] = self.main.current_turn.name + "'s " + "Turn"
             self.main.game_frame.tkraise()
+            self.main.CPU_turn()
             
         
 
@@ -545,9 +571,6 @@ class GameWindow(tk.Frame):
 
         # Stores all buttons for grid
         self.board_buttons = {}
-
-        # Stores the current turn
-        self.current_player = None
 
          # Obtains working directory for program 
         dirname, filename = os.path.split(os.path.abspath(sys.argv[0]))
@@ -608,32 +631,34 @@ class GameWindow(tk.Frame):
         self.player2_name_label = tk.Label(self, background="#FFFFFF", width=10, highlightthickness=0)
 
         # Creates buttons needed for game window
-        self.board_buttons1_1 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=placeholder_image, command=lambda: main.board.place_marker(self.board_buttons1_1, self.current_player, (1,1)))
+        self.board_buttons1_1 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=placeholder_image, command=lambda: main.board.place_marker(self.main, self.board_buttons1_1, self.main.current_turn, (1,1)))
         self.board_buttons1_1.image = placeholder_image
 
-        self.board_buttons1_2 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=placeholder_image, command=lambda: main.board.place_marker(self.board_buttons1_2, self.current_player, (1,2)))
+        self.board_buttons1_2 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=placeholder_image, command=lambda: main.board.place_marker(self.main, self.board_buttons1_2, self.main.current_turn, (1,2)))
         self.board_buttons1_2.image = placeholder_image
 
-        self.board_buttons1_3 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=placeholder_image, command=lambda: main.board.place_marker(self.board_buttons1_3, self.current_player, (1,3)))
+        self.board_buttons1_3 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=placeholder_image, command=lambda: main.board.place_marker(self.main, self.board_buttons1_3, self.main.current_turn, (1,3)))
         self.board_buttons1_3.image = placeholder_image
 
-        self.board_buttons2_1 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=placeholder_image, command=lambda: main.board.place_marker(self.board_buttons2_1, self.current_player, (2,1)))
+        self.board_buttons2_1 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=placeholder_image, command=lambda: main.board.place_marker(self.main, self.board_buttons2_1, self.main.current_turn, (2,1)))
         self.board_buttons2_1.image = placeholder_image
 
-        self.board_buttons2_2 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=placeholder_image, command=lambda: main.board.place_marker(self.board_buttons2_2, self.current_player, (2,2)))
+        self.board_buttons2_2 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=placeholder_image, command=lambda: main.board.place_marker(self.main, self.board_buttons2_2, self.main.current_turn, (2,2)))
         self.board_buttons2_2.image = placeholder_image
 
-        self.board_buttons2_3 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=placeholder_image, command=lambda: main.board.place_marker(self.board_buttons2_3, self.current_player, (2,3)))
+        self.board_buttons2_3 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=placeholder_image, command=lambda: main.board.place_marker(self.main, self.board_buttons2_3, self.main.current_turn, (2,3)))
         self.board_buttons2_3.image = placeholder_image
 
-        self.board_buttons3_1 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=placeholder_image, command=lambda: main.board.place_marker(self.board_buttons3_1, self.current_player, (3,1)))
+        self.board_buttons3_1 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=placeholder_image, command=lambda: main.board.place_marker(self.main, self.board_buttons3_1, self.main.current_turn, (3,1)))
         self.board_buttons3_1.image = placeholder_image
 
-        self.board_buttons3_2 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=placeholder_image, command=lambda: main.board.place_marker(self.board_buttons3_2, self.current_player, (3,2)))
+        self.board_buttons3_2 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=placeholder_image, command=lambda: main.board.place_marker(self.main, self.board_buttons3_2, self.main.current_turn, (3,2)))
         self.board_buttons3_2.image = placeholder_image
 
-        self.board_buttons3_3 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=placeholder_image, command=lambda: main.board.place_marker(self.board_buttons3_3, self.current_player, (3,3)))
+        self.board_buttons3_3 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=placeholder_image, command=lambda: main.board.place_marker(self.main, self.board_buttons3_3, self.main.current_turn, (3,3)))
         self.board_buttons3_3.image = placeholder_image
+
+        self.all_board_buttons = {(1,1): self.board_buttons1_1, (1,2): self.board_buttons1_2, (1,3): self.board_buttons1_3, (2,1): self.board_buttons2_1, (2,2): self.board_buttons2_2, (2,3): self.board_buttons2_3, (3,1): self.board_buttons3_1, (3,2): self.board_buttons3_2, (3,3): self.board_buttons3_3}
 
 
         self.reset_board = tk.Button(self, background="#FFFFFF", highlightthickness=0, text="Reset")
@@ -710,6 +735,12 @@ class Application():
         self.player1 = Player(name="", avatar=None, marker="X")
         self.player2 = Player(name="CPU", avatar=None, marker="O")
 
+        # Keeps track of which player's turn it is
+        self.current_turn = None
+
+        # Keeps track of if there's been a win yet
+        self.game_won = False
+
         # Creates grid to be used for game
         self.board = Grid()
         self.board.build_grid()
@@ -728,21 +759,15 @@ class Application():
         # Maintains application loop until retrieving input to close application
         self.root.mainloop()
 
+    def decide_first_turn(self):
+        possible_players = [self.player1, self.player2]
+        self.current_turn = choice(possible_players)
+
+    def CPU_turn(self):
+        if self.current_turn.CPU == True:
+            move_found = self.board.find_best_move(self.player1, self.player2)
+            self.board.place_marker(self, self.game_frame.all_board_buttons[move_found], self.player2, move_found)
 
 new_game = Application()
 
-
-# new_grid = Grid()
-# new_grid.build_grid()
-# player1 = Player(name="TestName", avatar=None, marker="X", image=None)
-# player2 = Player(name="TestCPU", avatar=None, marker="O", image=None)
-
-
-# new_grid.place_marker(player1, (2,2))
-# new_grid.place_marker(player2, (1,1))
-# new_grid.place_marker(player1, (2,1))
-# new_grid.place_marker(player2, (1,2))
-# new_grid.place_marker(player1, (1,3))
-# all_moves = new_grid.min_max(grid=new_grid.grid, player=player1, cpu=player2)
-# move_found = new_grid.find_best_move(player1, player2)
 # print(all_moves)
