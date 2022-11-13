@@ -58,7 +58,6 @@ class LinkedList():
 class GNode():
     def __init__(self, coordinate):
         self.value = None
-        self.image = None
         self.coordinate = coordinate
 
 class Grid():
@@ -447,7 +446,6 @@ class AvatarWindow(tk.Frame):
         row_10_spacer5.grid(row=10, column=10, sticky="nsew")
         self.multi_p_rbutton.grid(row=10, column=11, columnspan=2, sticky="nsew")
 
-        
         row_10_spacer6.grid(row=10, column=13, sticky="nsew")
         self.player2_avi_btn4.grid(row=10, column=14, sticky="nsew")
         row_10_spacer7.grid(row=10, column=15, sticky="nsew")
@@ -555,11 +553,6 @@ class AvatarWindow(tk.Frame):
             self.main.game_frame.tkraise()
             self.main.CPU_turn()
             
-        
-
-
-
-
 class GameWindow(tk.Frame):
     def __init__(self, master, main):
         
@@ -578,6 +571,7 @@ class GameWindow(tk.Frame):
         # Adds in placeholder image for buttons within tic-tac-toe board
         # All images must be saved in same folder as application to work
         placeholder_image = tk.PhotoImage(file=dirname + '\placeholder.png')
+        self.placeholder_image = placeholder_image
 
         # Creates all spacers needed for game window
         row1_spacer = tk.Canvas(self, background="#8F8F8F", width=1, height=20, highlightthickness=0)
@@ -661,7 +655,7 @@ class GameWindow(tk.Frame):
         self.all_board_buttons = {(1,1): self.board_buttons1_1, (1,2): self.board_buttons1_2, (1,3): self.board_buttons1_3, (2,1): self.board_buttons2_1, (2,2): self.board_buttons2_2, (2,3): self.board_buttons2_3, (3,1): self.board_buttons3_1, (3,2): self.board_buttons3_2, (3,3): self.board_buttons3_3}
 
 
-        self.reset_board = tk.Button(self, background="#FFFFFF", highlightthickness=0, text="Reset")
+        self.reset_board = tk.Button(self, background="#FFFFFF", highlightthickness=0, text="Reset", command=main.board_reset)
         self.setup_button = tk.Button(self, background="#FFFFFF", highlightthickness=0, text="Change Name")
         
         # Places all spacers, labels, and objects into the window
@@ -768,6 +762,20 @@ class Application():
             move_found = self.board.find_best_move(self.player1, self.player2)
             self.board.place_marker(self, self.game_frame.all_board_buttons[move_found], self.player2, move_found)
 
+    def board_reset(self):
+        self.game_won = False
+        for coordinate, button in self.game_frame.all_board_buttons.items():
+            self.board.grid[coordinate].value = None
+            button['image'] = self.game_frame.placeholder_image
+            button.image = self.game_frame.placeholder_image
+        self.decide_first_turn()
+        self.game_frame.status_label['text'] = self.current_turn.name + "'s " + "Turn"
+        self.CPU_turn()
+
+
 new_game = Application()
 
 # print(all_moves)
+            # self.grid[coordinate].value = player.marker
+            # board_button['image'] = player.avatar
+            # board_button.image = player.avatar
