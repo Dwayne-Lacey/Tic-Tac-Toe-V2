@@ -1,4 +1,5 @@
 This is a revision of one of the first projects I completed in Tic-Tac-Toe that takes the game from the command line to it's own GUI
+
 Libraries used are Tkinter, Random, OS, Sys, and copy
 
 The backend of the application runs utilizing a min max algorithm for the AI to create a highly competitive game experience and stores moves within a linked list and dictionary.
