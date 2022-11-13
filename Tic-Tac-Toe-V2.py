@@ -656,7 +656,7 @@ class GameWindow(tk.Frame):
 
 
         self.reset_board = tk.Button(self, background="#FFFFFF", highlightthickness=0, text="Reset", command=main.board_reset)
-        self.setup_button = tk.Button(self, background="#FFFFFF", highlightthickness=0, text="Change Name")
+        self.setup_button = tk.Button(self, background="#FFFFFF", highlightthickness=0, text="Change Name", command=main.change_settings)
         
         # Places all spacers, labels, and objects into the window
         row1_spacer.grid(row=1, column=1, columnspan=11, sticky="nsew")
@@ -771,6 +771,14 @@ class Application():
         self.decide_first_turn()
         self.game_frame.status_label['text'] = self.current_turn.name + "'s " + "Turn"
         self.CPU_turn()
+    
+    def change_settings(self):
+        self.avatar_frame.tkraise()
+        self.game_won = False
+        for coordinate, button in self.game_frame.all_board_buttons.items():
+            self.board.grid[coordinate].value = None
+            button['image'] = self.game_frame.placeholder_image
+            button.image = self.game_frame.placeholder_image
 
 
 new_game = Application()
