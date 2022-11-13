@@ -77,10 +77,12 @@ class Grid():
             node.image = None
     
     # This method places a marker down on the player's chosen space
-    def place_marker(self, player, coordinate):
+    def place_marker(self, board_button, player, coordinate):
         if self.grid[coordinate].value == None:
             self.grid[coordinate].value = player.marker
             self.grid[coordinate].image = player.avatar
+            board_button['image'] = player.avatar
+            board_button.image = player.avatar
             return True
         else:
             return False
@@ -329,40 +331,40 @@ class AvatarWindow(tk.Frame):
         # Buttons containing images 
         start_game_btn = tk.Button(self, background="#FFFFFF", width=15, height=2, highlightthickness=0, text="START GAME", font=('Segoe 14 bold'), command=lambda: self.complete_setup())
         
-        self.player1_avi_btn1 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=turtle_photo, command=lambda: self.select_avatar(turtle_photo, self.player1, self.player1_avatar_label, self.player2_avatar_label))
+        self.player1_avi_btn1 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=turtle_photo, command=lambda: self.select_avatar(turtle_photo, self.main.player1, self.player1_avatar_label, self.player2_avatar_label))
         self.player1_avi_btn1.image = turtle_photo
 
-        self.player1_avi_btn2 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=monkey_photo, command=lambda: self.select_avatar(monkey_photo, self.player1, self.player1_avatar_label, self.player2_avatar_label))
+        self.player1_avi_btn2 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=monkey_photo, command=lambda: self.select_avatar(monkey_photo, self.main.player1, self.player1_avatar_label, self.player2_avatar_label))
         self.player1_avi_btn2.image = monkey_photo
 
-        self.player1_avi_btn3 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=frog_photo, command=lambda: self.select_avatar(frog_photo, self.player1, self.player1_avatar_label, self.player2_avatar_label))
+        self.player1_avi_btn3 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=frog_photo, command=lambda: self.select_avatar(frog_photo, self.main.player1, self.player1_avatar_label, self.player2_avatar_label))
         self.player1_avi_btn3.image = frog_photo
 
-        self.player1_avi_btn4 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=koala_photo, command=lambda: self.select_avatar(koala_photo, self.player1, self.player1_avatar_label, self.player2_avatar_label))
+        self.player1_avi_btn4 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=koala_photo, command=lambda: self.select_avatar(koala_photo, self.main.player1, self.player1_avatar_label, self.player2_avatar_label))
         self.player1_avi_btn4.image = koala_photo
 
-        self.player1_avi_btn5 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=walrus_photo, command=lambda: self.select_avatar(walrus_photo, self.player1, self.player1_avatar_label, self.player2_avatar_label))
+        self.player1_avi_btn5 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=walrus_photo, command=lambda: self.select_avatar(walrus_photo, self.main.player1, self.player1_avatar_label, self.player2_avatar_label))
         self.player1_avi_btn5.image = walrus_photo
 
-        self.player1_avi_btn6 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=panda_photo, command=lambda: self.select_avatar(panda_photo, self.player1, self.player1_avatar_label, self.player2_avatar_label))
+        self.player1_avi_btn6 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=panda_photo, command=lambda: self.select_avatar(panda_photo, self.main.player1, self.player1_avatar_label, self.player2_avatar_label))
         self.player1_avi_btn6.image = panda_photo
 
-        self.player2_avi_btn1 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=turtle_photo, command=lambda: self.select_avatar(turtle_photo, self.player2, self.player2_avatar_label, self.player1_avatar_label))
+        self.player2_avi_btn1 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=turtle_photo, command=lambda: self.select_avatar(turtle_photo, self.main.player2, self.player2_avatar_label, self.player1_avatar_label))
         self.player2_avi_btn1.image = turtle_photo
 
-        self.player2_avi_btn2 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=monkey_photo, command=lambda: self.select_avatar(monkey_photo, self.player2, self.player2_avatar_label, self.player1_avatar_label))
+        self.player2_avi_btn2 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=monkey_photo, command=lambda: self.select_avatar(monkey_photo, self.main.player2, self.player2_avatar_label, self.player1_avatar_label))
         self.player2_avi_btn2.image = monkey_photo
 
-        self.player2_avi_btn3 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=frog_photo, command=lambda: self.select_avatar(frog_photo, self.player2, self.player2_avatar_label, self.player1_avatar_label))
+        self.player2_avi_btn3 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=frog_photo, command=lambda: self.select_avatar(frog_photo, self.main.player2, self.player2_avatar_label, self.player1_avatar_label))
         self.player2_avi_btn3.image = frog_photo
 
-        self.player2_avi_btn4 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=koala_photo, command=lambda: self.select_avatar(koala_photo, self.player2, self.player2_avatar_label, self.player1_avatar_label))
+        self.player2_avi_btn4 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=koala_photo, command=lambda: self.select_avatar(koala_photo, self.main.player2, self.player2_avatar_label, self.player1_avatar_label))
         self.player2_avi_btn4.image = koala_photo
 
-        self.player2_avi_btn5 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=walrus_photo, command=lambda: self.select_avatar(walrus_photo, self.player2, self.player2_avatar_label, self.player1_avatar_label))
+        self.player2_avi_btn5 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=walrus_photo, command=lambda: self.select_avatar(walrus_photo, self.main.player2, self.player2_avatar_label, self.player1_avatar_label))
         self.player2_avi_btn5.image = walrus_photo
 
-        self.player2_avi_btn6 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=panda_photo, command=lambda: self.select_avatar(panda_photo, self.player2, self.player2_avatar_label, self.player1_avatar_label))
+        self.player2_avi_btn6 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=panda_photo, command=lambda: self.select_avatar(panda_photo, self.main.player2, self.player2_avatar_label, self.player1_avatar_label))
         self.player2_avi_btn6.image = panda_photo
         
 
@@ -452,9 +454,9 @@ class AvatarWindow(tk.Frame):
         self.player2_entry.delete(0, tk.END)
         self.player2_entry.insert(0, "CPU")
         self.player2_entry["state"] = tk.DISABLED
-        self.player2.name = "CPU"
-        self.player2.CPU = True
-        self.player2.avatar = self.cpu_avatar
+        self.main.player2.name = "CPU"
+        self.main.player2.CPU = True
+        self.main.player2.avatar = self.cpu_avatar
         self.player2_avatar_label["image"] = self.cpu_avatar
         self.player2_avi_btn1["state"] = tk.DISABLED
         self.player2_avi_btn2["state"] = tk.DISABLED
@@ -477,9 +479,9 @@ class AvatarWindow(tk.Frame):
     def change_multi_player(self, n):
         self.player2_entry["state"] = tk.NORMAL
         self.player2_entry.delete(0, tk.END)
-        self.player2.name = ""
-        self.player2.CPU = False
-        self.player2.avatar = None
+        self.main.player2.name = ""
+        self.main.player2.CPU = False
+        self.main.player2.avatar = None
         self.player2_avatar_label["image"] = None
         for button in self.winfo_children():
             if 'tkinter.Button' in str(type(button)):
@@ -514,9 +516,17 @@ class AvatarWindow(tk.Frame):
             player2_name = "CPU"
         if len(player1_name) < 1 or len(player2_name) < 1:
             self.error_label['text'] = "Please enter your name"
+        elif len(player1_name) > 9 or len(player2_name) > 9:
+            self.error_label['text'] = "Name cannot exceed 9 characters"
         else:
-            self.player1.name = player1_name
-            self.player2.name = player2_name
+            self.main.player1.name = player1_name
+            self.main.player2.name = player2_name
+            self.main.game_frame.player1_name_label['text'] = self.main.player1.name
+            self.main.game_frame.player2_name_label['text'] = self.main.player2.name
+            self.main.game_frame.player1_avatar_label['image'] = self.main.player1.avatar
+            self.main.game_frame.player1_avatar_label.image = self.main.player1.avatar
+            self.main.game_frame.player2_avatar_label['image'] = self.main.player2.avatar
+            self.main.game_frame.player2_avatar_label.image = self.main.player2.avatar
             self.main.game_frame.tkraise()
             
         
@@ -534,45 +544,52 @@ class GameWindow(tk.Frame):
         self.main = main
 
         # Stores all buttons for grid
-        self.grid_buttons = {}
+        self.board_buttons = {}
 
         # Stores the current turn
         self.current_player = None
 
+         # Obtains working directory for program 
+        dirname, filename = os.path.split(os.path.abspath(sys.argv[0]))
+
+        # Adds in placeholder image for buttons within tic-tac-toe board
+        # All images must be saved in same folder as application to work
+        placeholder_image = tk.PhotoImage(file=dirname + '\placeholder.png')
+
         # Creates all spacers needed for game window
         row1_spacer = tk.Canvas(self, background="#8F8F8F", width=1, height=20, highlightthickness=0)
 
-        row2_spacer1 = tk.Canvas(self, background="#8F8F8F", width=1, height=20, highlightthickness=0)
-        row2_spacer2 = tk.Canvas(self, background="#8F8F8F", width=1, height=20, highlightthickness=0)
+        row2_spacer1 = tk.Canvas(self, background="#8F8F8F", width=100, height=20, highlightthickness=0)
+        row2_spacer2 = tk.Canvas(self, background="#8F8F8F", width=100, height=20, highlightthickness=0)
 
-        row3_spacer = tk.Canvas(self, background="#8F8F8F", width=1, height=20, highlightthickness=0)
+        row3_spacer = tk.Canvas(self, background="#8F8F8F", width=10, height=20, highlightthickness=0)
 
-        row4_spacer1 = tk.Canvas(self, background="#8F8F8F", width=1, height=20, highlightthickness=0)
-        row4_spacer2 = tk.Canvas(self, background="#8F8F8F", width=1, height=20, highlightthickness=0)
-        row4_spacer3 = tk.Canvas(self, background="#8F8F8F", width=1, height=20, highlightthickness=0)
-        row4_spacer4 = tk.Canvas(self, background="#8F8F8F", width=1, height=20, highlightthickness=0)
+        row4_spacer1 = tk.Canvas(self, background="#8F8F8F", width=10, height=20, highlightthickness=0)
+        row4_spacer2 = tk.Canvas(self, background="#000000", width=10, height=20, highlightthickness=0)
+        row4_spacer3 = tk.Canvas(self, background="#000000", width=10, height=20, highlightthickness=0)
+        row4_spacer4 = tk.Canvas(self, background="#8F8F8F", width=10, height=20, highlightthickness=0)
 
-        row5_spacer1 = tk.Canvas(self, background="#8F8F8F", width=1, height=20, highlightthickness=0)
-        row5_spacer2 = tk.Canvas(self, background="#8F8F8F", width=1, height=20, highlightthickness=0)
-        row5_spacer3 = tk.Canvas(self, background="#8F8F8F", width=1, height=20, highlightthickness=0)
+        row5_spacer1 = tk.Canvas(self, background="#8F8F8F", width=10, height=10, highlightthickness=0)
+        row5_spacer2 = tk.Canvas(self, background="#000000", width=10, height=10, highlightthickness=0)
+        row5_spacer3 = tk.Canvas(self, background="#8F8F8F", width=10, height=10, highlightthickness=0)
 
-        row6_spacer1 = tk.Canvas(self, background="#8F8F8F", width=1, height=20, highlightthickness=0)
-        row6_spacer2 = tk.Canvas(self, background="#8F8F8F", width=1, height=20, highlightthickness=0)
-        row6_spacer3 = tk.Canvas(self, background="#8F8F8F", width=1, height=20, highlightthickness=0)
-        row6_spacer4 = tk.Canvas(self, background="#8F8F8F", width=1, height=20, highlightthickness=0)
-        row6_spacer5 = tk.Canvas(self, background="#8F8F8F", width=1, height=20, highlightthickness=0)
-        row6_spacer6 = tk.Canvas(self, background="#8F8F8F", width=1, height=20, highlightthickness=0)
+        row6_spacer1 = tk.Canvas(self, background="#8F8F8F", width=10, height=20, highlightthickness=0)
+        row6_spacer2 = tk.Canvas(self, background="#8F8F8F", width=30, height=20, highlightthickness=0)
+        row6_spacer3 = tk.Canvas(self, background="#000000", width=10, height=20, highlightthickness=0)
+        row6_spacer4 = tk.Canvas(self, background="#000000", width=10, height=20, highlightthickness=0)
+        row6_spacer5 = tk.Canvas(self, background="#8F8F8F", width=30, height=20, highlightthickness=0)
+        row6_spacer6 = tk.Canvas(self, background="#8F8F8F", width=10, height=20, highlightthickness=0)
 
-        row7_spacer1 = tk.Canvas(self, background="#8F8F8F", width=1, height=20, highlightthickness=0)
-        row7_spacer2 = tk.Canvas(self, background="#8F8F8F", width=1, height=20, highlightthickness=0)
-        row7_spacer3 = tk.Canvas(self, background="#8F8F8F", width=1, height=20, highlightthickness=0)
+        row7_spacer1 = tk.Canvas(self, background="#8F8F8F", width=10, height=10, highlightthickness=0)
+        row7_spacer2 = tk.Canvas(self, background="#000000", width=10, height=10, highlightthickness=0)
+        row7_spacer3 = tk.Canvas(self, background="#8F8F8F", width=10, height=10, highlightthickness=0)
 
-        row8_spacer1 = tk.Canvas(self, background="#8F8F8F", width=1, height=20, highlightthickness=0)
-        row8_spacer2 = tk.Canvas(self, background="#8F8F8F", width=1, height=20, highlightthickness=0)
-        row8_spacer3 = tk.Canvas(self, background="#8F8F8F", width=1, height=20, highlightthickness=0)
-        row8_spacer4 = tk.Canvas(self, background="#8F8F8F", width=1, height=20, highlightthickness=0)
-        row8_spacer5 = tk.Canvas(self, background="#8F8F8F", width=1, height=20, highlightthickness=0)
-        row8_spacer6 = tk.Canvas(self, background="#8F8F8F", width=1, height=20, highlightthickness=0)
+        row8_spacer1 = tk.Canvas(self, background="#8F8F8F", width=130, height=20, highlightthickness=0)
+        row8_spacer2 = tk.Canvas(self, background="#8F8F8F", width=10, height=20, highlightthickness=0)
+        row8_spacer3 = tk.Canvas(self, background="#000000", width=10, height=20, highlightthickness=0)
+        row8_spacer4 = tk.Canvas(self, background="#000000", width=10, height=20, highlightthickness=0)
+        row8_spacer5 = tk.Canvas(self, background="#8F8F8F", width=10, height=20, highlightthickness=0)
+        row8_spacer6 = tk.Canvas(self, background="#8F8F8F", width=130, height=20, highlightthickness=0)
 
         row9_spacer = tk.Canvas(self, background="#8F8F8F", width=1, height=20, highlightthickness=0)
 
@@ -580,22 +597,108 @@ class GameWindow(tk.Frame):
         row10_spacer2 = tk.Canvas(self, background="#8F8F8F", width=1, height=20, highlightthickness=0)
         row10_spacer3 = tk.Canvas(self, background="#8F8F8F", width=1, height=20, highlightthickness=0)
 
-        row11_spacer = tk.Canvas(self, background="#8F8F8F", width=1, height=20, highlightthickness=0)
+        row11_spacer = tk.Canvas(self, background="#8F8F8F", width=1, height=95, highlightthickness=0)
 
         # Creates all labels needed for game window
-        self.status_label = tk.Label(self, background="#FFFFFF", width=10, height=2, highlightthickness=0, text="status placeholder", font=('Segoe 16 bold'))
-        self.player1_avatar_label = tk.Label(self, background="#FFFFFF", width=10, highlightthickness=0, image=main.player1.avatar)
-        self.player2_avatar_label = tk.Label(self, background="#FFFFFF", width=10, highlightthickness=0, image=main.player2.avatar)
-        self.player1_name_label = tk.Label(self, background="#FFFFFF", width=10, highlightthickness=0, text=main.player1.name)
-        self.player2_name_label = tk.Label(self, background="#FFFFFF", width=10, highlightthickness=0, text=main.player2.name)
+        self.status_label = tk.Label(self, background="#FFFFFF", width=5, height=2, highlightthickness=0, text="status placeholder", font=('Segoe 16 bold'))
+        self.player1_avatar_label = tk.Label(self, background="#FFFFFF", width=10, highlightthickness=0)
+        self.player2_avatar_label = tk.Label(self, background="#FFFFFF", width=10, highlightthickness=0)
+
+        self.player1_name_label = tk.Label(self, background="#FFFFFF", width=10, highlightthickness=0)
+        self.player2_name_label = tk.Label(self, background="#FFFFFF", width=10, highlightthickness=0)
 
         # Creates buttons needed for game window
-        for y in range(1, 4):
-            for x in range(1, 4):
-                self.grid_buttons[(y,x)] = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=self.grid[(y,x)].image, command=lambda: main.grid.place_marker(self.current_player, (y,x)))
-        self.reset_board = tk.Button(self, background="#FFFFFF", highlightthickness=0)
-        self.setup_button = tk.Button(self, background="#FFFFFF", highlightthickness=0)
+        self.board_buttons1_1 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=placeholder_image, command=lambda: main.board.place_marker(self.board_buttons1_1, self.current_player, (1,1)))
+        self.board_buttons1_1.image = placeholder_image
+
+        self.board_buttons1_2 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=placeholder_image, command=lambda: main.board.place_marker(self.board_buttons1_2, self.current_player, (1,2)))
+        self.board_buttons1_2.image = placeholder_image
+
+        self.board_buttons1_3 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=placeholder_image, command=lambda: main.board.place_marker(self.board_buttons1_3, self.current_player, (1,3)))
+        self.board_buttons1_3.image = placeholder_image
+
+        self.board_buttons2_1 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=placeholder_image, command=lambda: main.board.place_marker(self.board_buttons2_1, self.current_player, (2,1)))
+        self.board_buttons2_1.image = placeholder_image
+
+        self.board_buttons2_2 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=placeholder_image, command=lambda: main.board.place_marker(self.board_buttons2_2, self.current_player, (2,2)))
+        self.board_buttons2_2.image = placeholder_image
+
+        self.board_buttons2_3 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=placeholder_image, command=lambda: main.board.place_marker(self.board_buttons2_3, self.current_player, (2,3)))
+        self.board_buttons2_3.image = placeholder_image
+
+        self.board_buttons3_1 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=placeholder_image, command=lambda: main.board.place_marker(self.board_buttons3_1, self.current_player, (3,1)))
+        self.board_buttons3_1.image = placeholder_image
+
+        self.board_buttons3_2 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=placeholder_image, command=lambda: main.board.place_marker(self.board_buttons3_2, self.current_player, (3,2)))
+        self.board_buttons3_2.image = placeholder_image
+
+        self.board_buttons3_3 = tk.Button(self, background="#FFFFFF", highlightthickness=0, image=placeholder_image, command=lambda: main.board.place_marker(self.board_buttons3_3, self.current_player, (3,3)))
+        self.board_buttons3_3.image = placeholder_image
+
+
+        self.reset_board = tk.Button(self, background="#FFFFFF", highlightthickness=0, text="Reset")
+        self.setup_button = tk.Button(self, background="#FFFFFF", highlightthickness=0, text="Change Name")
         
+        # Places all spacers, labels, and objects into the window
+        row1_spacer.grid(row=1, column=1, columnspan=11, sticky="nsew")
+
+        row2_spacer1.grid(row=2, column=1, columnspan=2, sticky="nsew")
+        self.status_label.grid(row=2, column=3, columnspan=7, sticky="nsew")
+        row2_spacer2.grid(row=2, column=10, columnspan=2, sticky="nsew")
+
+        row3_spacer.grid(row=3, column=1, columnspan=11, sticky="nsew")
+
+        row4_spacer1.grid(row=4, column=1, columnspan=3, sticky="nsew")
+        self.board_buttons1_1.grid(row=4, column=4, sticky="nsew")
+        row4_spacer2.grid(row=4, column=5, sticky="nsew")
+        self.board_buttons1_2.grid(row=4, column=6, sticky="nsew")
+        row4_spacer3.grid(row=4, column=7, sticky="nsew")
+        self.board_buttons1_3.grid(row=4, column=8, sticky="nsew")
+        row4_spacer4.grid(row=4, column=9, columnspan=3, sticky="nsew")
+
+        row5_spacer1.grid(row=5, column=1, columnspan=3, sticky="nsew")
+        row5_spacer2.grid(row=5, column=4, columnspan=5, sticky="nsew")
+        row5_spacer3.grid(row=5, column=9, columnspan=3, sticky="nsew")
+
+        row6_spacer1.grid(row=6, column=1, sticky="nsew")
+        self.player1_avatar_label.grid(row=6, column=2, sticky="nsew")
+        row6_spacer2.grid(row=6, column=3, sticky="nsew")
+        self.board_buttons2_1.grid(row=6, column=4, sticky="nsew")
+        row6_spacer3.grid(row=6, column=5, sticky="nsew")
+        self.board_buttons2_2.grid(row=6, column=6, sticky="nsew")
+        row6_spacer4.grid(row=6, column=7, sticky="nsew")
+        self.board_buttons2_3.grid(row=6, column=8, sticky="nsew")
+        row6_spacer5.grid(row=6, column=9, sticky="nsew")
+        self.player2_avatar_label.grid(row=6, column=10, sticky="nsew")
+        row6_spacer6.grid(row=6, column=11, sticky="nsew")
+
+        row7_spacer1.grid(row=7, column=1, columnspan=3, sticky="nsew")
+        row7_spacer2.grid(row=7, column=4, columnspan=5, sticky="nsew")
+        row7_spacer3.grid(row=7, column=9, columnspan=3, sticky="nsew")
+
+        row8_spacer1.grid(row=8, column=1, sticky="nsew")
+        self.player1_name_label.grid(row=8, column=2, sticky="nsew")
+        row8_spacer2.grid(row=8, column=3, sticky="nsew")
+        self.board_buttons3_1.grid(row=8, column=4, sticky="nsew")
+        row8_spacer3.grid(row=8, column=5, sticky="nsew")
+        self.board_buttons3_2.grid(row=8, column=6, sticky="nsew")
+        row8_spacer4.grid(row=8, column=7, sticky="nsew")
+        self.board_buttons3_3.grid(row=8, column=8, sticky="nsew")
+        row8_spacer5.grid(row=8, column=9, sticky="nsew")
+        self.player2_name_label.grid(row=8, column=10, sticky="nsew")
+        row8_spacer6.grid(row=8, column=11, sticky="nsew")
+
+        row9_spacer.grid(row=9, column=1, columnspan=11, sticky="nsew")
+
+        row10_spacer1.grid(row=10, column=1, columnspan=2, sticky="nsew")
+        self.reset_board.grid(row=10, column=3, columnspan=2, sticky="nsew")
+        row10_spacer2.grid(row=10, column=5, columnspan=3, sticky="nsew")
+        self.setup_button.grid(row=10, column=8, columnspan=2, sticky="nsew")
+        row10_spacer3.grid(row=10, column=10, columnspan=2, sticky="nsew")
+
+        row11_spacer.grid(row=11, column=1, columnspan=11, sticky="nsew")
+
+        self.current_player = main.player1
 
 
 class Application():
@@ -608,8 +711,8 @@ class Application():
         self.player2 = Player(name="CPU", avatar=None, marker="O")
 
         # Creates grid to be used for game
-        self.grid = Grid()
-        self.grid.build_grid()
+        self.board = Grid()
+        self.board.build_grid()
 
         # Adds title to window
         self.root.title("Tic-Tac-Toe")
